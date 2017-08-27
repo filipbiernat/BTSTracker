@@ -17,10 +17,12 @@ public class BtsChangeListener extends PhoneStateListener {
 
     private Context context;
     private BtsIdList btsIdList;
+    private BtsSearcher btsSearcher;
 
     public BtsChangeListener(Context context, BtsIdList btsIdList) {
         this.context = context;
         this.btsIdList = btsIdList;
+        btsSearcher = new BtsSearcher(context);
 
     }
 
@@ -36,6 +38,7 @@ public class BtsChangeListener extends PhoneStateListener {
             BtsId btsId = BtsId.generateBtsId(cellInfo);
             if (null != btsId){
                 btsIdList.add(btsId);
+                btsSearcher.search(btsId);
                 //btsTracker.addToBtsIdList(btsId);
             }
 

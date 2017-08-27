@@ -53,44 +53,7 @@ public class MainActivity extends AppCompatActivity
         checkPermissions();
         Log.d("LOGFILIP", "d3");
 
-/*
-        try{
-            Scanner scan = new Scanner(new File("src/main/res/btsData.csv"));
-            while(scan.hasNext()) {
-                String line = scan.nextLine().toString();
-                if (line.contains("207;6261")) {
-                    System.out.println(line);
-                    Log.d("LOGFILIP", line);
-                }
-            }
 
-        } catch(Exception e){
-            e.printStackTrace();
-        }*/
-/*
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(
-                    new InputStreamReader(getAssets().open("btsData.csv"), "UTF-8"));
-
-            // do reading, usually loop until end of file reading
-            String mLine;
-            while ((mLine = reader.readLine()) != null) {
-                Log.d("LOGFILIP line", mLine);
-
-            }
-        } catch (IOException e) {
-            //log the exception
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    //log the exception
-                }
-            }
-        }
-*/
 
     }
 

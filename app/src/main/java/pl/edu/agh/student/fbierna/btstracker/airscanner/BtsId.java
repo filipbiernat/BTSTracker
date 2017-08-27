@@ -93,6 +93,11 @@ public class BtsId {
         }
     }
 
+    public String getStringId(){
+        int lacId = network == Network.LTE ? 0 : lac;
+        String stringId = lacId + ";" + id;
+        return stringId;
+    }
 
     public static BtsId generateBtsId(CellInfo cellInfo) {
         BtsId btsId = null;
