@@ -115,7 +115,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .snippet("Lorem Ipsum")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(bochnia, 15);
+        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(bochnia, 6);
         mMap.animateCamera(zoom);
 
 

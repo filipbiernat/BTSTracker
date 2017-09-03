@@ -41,4 +41,16 @@ public class BtsData {
                 .snippet("Lorem Ipsum")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
     }
+
+    public String getNetworkOperator(){
+        return networkOperator;
+    }
+
+    public String getTownAndRegion(){
+        return town + ", " + region;
+    }
+
+    public String getLocation(){
+        return location;
+    }
 }

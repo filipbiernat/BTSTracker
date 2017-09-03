@@ -2,22 +2,29 @@ package pl.edu.agh.student.fbierna.btstracker;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+import pl.edu.agh.student.fbierna.btstracker.list.ListAdapter;
 
 
-    public HomeFragment() {
+public class ListFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+
+    public ListFragment() {
         // Required empty public constructor
     }
 
@@ -26,10 +33,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-
-
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         return view;
     }
@@ -37,6 +41,21 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        //pies = makePies();
+        layoutManager = new LinearLayoutManager(getActivity());
+//        pieLayoutManager = new GridLayoutManager(this,1);
+
+        recyclerView.setLayoutManager(layoutManager);
+        ListAdapter adapter = new ListAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
+
+
+
+
         Log.d("LOGFILIP", "h1");
         FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab_home);
         Log.d("LOGFILIP", "h2");
