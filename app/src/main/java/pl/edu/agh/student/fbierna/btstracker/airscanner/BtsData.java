@@ -53,4 +53,8 @@ public class BtsData {
     public String getLocation(){
         return location;
     }
+
+    public Network getNetworkMode(){
+        return btsId.network;
+    }
 }

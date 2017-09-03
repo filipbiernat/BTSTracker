@@ -14,22 +14,22 @@ import android.telephony.CellInfoWcdma;
 
 public class BtsId {
 
-    private Network network;
+    public Network network;//fixme
     private int mcc;
     private int mnc;
     private int lac;
     private int id;
     private int ss;
 
-    /*
-    private BtsId(Network network, int mcc, int mnc, int lac, int id, int ss) {
+
+    public BtsId(Network network, int mcc, int mnc, int lac, int id, int ss) {
         this.network = network;
         this.mcc = mcc;
         this.mnc = mnc;
         this.lac = lac;
         this.id = id;
         this.ss = ss;
-    }*/
+    }
     public BtsId() {
         this.network = Network.GSM;
         this.mcc = 1;

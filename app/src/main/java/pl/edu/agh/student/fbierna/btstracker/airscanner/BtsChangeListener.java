@@ -26,6 +26,25 @@ public class BtsChangeListener extends PhoneStateListener {
         this.btsDataList = btsDataList;
         btsSearcher = new BtsSearcher(context);
 
+
+
+        //fill temp
+        BtsId btsId = new BtsId(Network.GSM, 20, 10, 2201, 6241, 1);
+        BtsData btsData = btsSearcher.search(btsId);
+        if (btsData != null){
+            btsDataList.add(btsData);
+        }
+        btsId = new BtsId(Network.WCDMA, 20, 10, 207, 2547, 1);
+        btsData = btsSearcher.search(btsId);
+        if (btsData != null){
+            btsDataList.add(btsData);
+        }
+        btsId = new BtsId(Network.LTE, 20, 10, 0, 228653, 1);
+        btsData = btsSearcher.search(btsId);
+        if (btsData != null){
+            btsDataList.add(btsData);
+        }
+
     }
 
     public void onCellLocationChanged (CellLocation location) {
