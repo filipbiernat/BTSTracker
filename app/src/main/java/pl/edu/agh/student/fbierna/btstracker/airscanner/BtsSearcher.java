@@ -22,13 +22,14 @@ public class BtsSearcher {
         this.context = context;
     }
 
-    public void search(BtsId btsId) {
+    public BtsData search(BtsId btsId) {
         String id = btsId.getStringId();
         Log.d("LOGFILIP id", id);
         String dataFromCsv = scanCsv(id);
         if (dataFromCsv != null){
-            Log.d("LOGFILIP line", dataFromCsv);
+            return new BtsData(btsId, dataFromCsv);
         }
+        return null;
     }
 
 

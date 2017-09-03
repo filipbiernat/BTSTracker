@@ -17,11 +17,13 @@ public class BtsChangeListener extends PhoneStateListener {
 
     private Context context;
     private BtsIdList btsIdList;
+    private BtsDataList btsDataList;
     private BtsSearcher btsSearcher;
 
-    public BtsChangeListener(Context context, BtsIdList btsIdList) {
+    public BtsChangeListener(Context context, BtsIdList btsIdList, BtsDataList btsDataList) {
         this.context = context;
         this.btsIdList = btsIdList;
+        this.btsDataList = btsDataList;
         btsSearcher = new BtsSearcher(context);
 
     }
@@ -37,9 +39,12 @@ public class BtsChangeListener extends PhoneStateListener {
             }
             BtsId btsId = BtsId.generateBtsId(cellInfo);
             if (null != btsId){
-                btsIdList.add(btsId);
-                btsSearcher.search(btsId);
-                //btsTracker.addToBtsIdList(btsId);
+                btsIdList.add(btsId);//sprawdzaj czy jest na liscie
+                BtsData btsData = btsSearcher.search(btsId);
+                if (btsData != null){
+                    btsDataList.add(btsData);
+                }
+
             }
 
         }

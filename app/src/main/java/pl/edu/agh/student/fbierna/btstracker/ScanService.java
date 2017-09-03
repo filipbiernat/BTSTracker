@@ -33,7 +33,9 @@ public class ScanService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        btsChangeListener = new BtsChangeListener(this, ((BtsTracker) getApplicationContext()).btsIdList);
+        btsChangeListener = new BtsChangeListener(this,
+                ((BtsTracker) getApplicationContext()).btsIdList,
+                ((BtsTracker) getApplicationContext()).btsDataList);
 
    }
 

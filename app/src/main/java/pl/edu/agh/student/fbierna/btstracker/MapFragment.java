@@ -25,6 +25,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsData;
+import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsDataList;
+
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -100,6 +103,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
 
         LatLng bochnia= new LatLng(49.965611, 20.454008);
+
+        BtsDataList btsDataList = ((BtsTracker) getActivity().getApplication()).btsDataList;
+
+        for(BtsData btsData : btsDataList.get()){
+            Marker marker = mMap.addMarker(btsData.getMarkerOptions());
+        }
+
         Marker bochniaMarker = mMap.addMarker(new MarkerOptions().position(bochnia)
                 .title("Marker in Bochnia")
                 .snippet("Lorem Ipsum")
