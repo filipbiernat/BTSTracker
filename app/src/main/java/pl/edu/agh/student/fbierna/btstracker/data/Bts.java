@@ -1,10 +1,18 @@
 package pl.edu.agh.student.fbierna.btstracker.data;
 
+import android.location.Location;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import static android.R.attr.data;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * Created by Filip on 10.09.2017.
@@ -18,13 +26,17 @@ public class Bts {
     private String operatorName;
     private String networkType;
     private LatLng latLng;
+    private long timeAttachedLong;
+    private String timeAttached;
 
     private static final String CSV_SPLIT_BY = ";";
 
-    public Bts(String csvData, String operatorName, int networkType, int networkGeneration){
+    public Bts(String csvData, String operatorName, int networkGeneration){
         this.operatorName = operatorName;
-        this.networkType = parseNetworkType(networkType);
+        this.networkType = parseNetworkType(networkGeneration);
         this.networkGeneration = networkGeneration;
+        timeAttachedLong = 0;
+        timeAttached = "Obecnie";
 
         String[] data = csvData.split(CSV_SPLIT_BY);
 
@@ -36,9 +48,68 @@ public class Bts {
         latLng = new LatLng(lat, lng);
     }
 
-    private String parseNetworkType(int networkType){
-        return Integer.toString(networkType);//FIXME FB
+    public Bts(Bts other) {
+        if (null != other) {
+            networkGeneration = other.networkGeneration;
+            region = other.region;
+            town = other.town;
+            location = other.location;
+            operatorName = other.operatorName;
+            networkType = other.networkType;
+            latLng = other.latLng;
+            timeAttachedLong = other.timeAttachedLong;
+            timeAttached = other.timeAttached;
+        } else {
+            networkGeneration = 2;
+            region = " - ";
+            town = " - ";
+            location = " - ";
+            operatorName = " - ";
+            networkType = " - ";
+            latLng = null;
+            timeAttachedLong = 0;
+            timeAttached = " - ";
+        }
     }
+
+    private String parseNetworkType(int networkType){
+        switch(networkType){
+            case 2: return "GSM";
+            case 3: return "WCDMA";
+            case 4: return "LTE";
+            default: return "Unknown";//exception
+        }
+    }
+
+    public void detach(Date timeOfAttach, Date currentTime){
+        timeAttachedLong += currentTime.getTime() - timeOfAttach.getTime();
+        Log.d("LOGFILIP", "time2 || " + timeOfAttach + " | " + currentTime);
+        long d = TimeUnit.MILLISECONDS.toDays(timeAttachedLong);
+        long h = TimeUnit.MILLISECONDS.toHours(timeAttachedLong) % 24;
+        long m = TimeUnit.MILLISECONDS.toMinutes(timeAttachedLong) % 60;
+        long s = TimeUnit.MILLISECONDS.toSeconds(timeAttachedLong) % 60;
+
+        Log.d("LOGFILIP", "timeAttachedLong || " + timeAttachedLong + " d " + d + " m " + m + " s " + s);
+
+        String dd = convertTimeDelta(d, "d");
+        String ddhh = dd + convertTimeDelta(h, "h");
+        String ddhhmm = ddhh + convertTimeDelta(m, "min");
+        String ddhhmmss = ddhhmm + convertTimeDelta(s, "s");
+        timeAttached = ddhhmmss;
+        Log.d("LOGFILIP", "timeAttached || " + timeAttached);
+    }
+
+    private String convertTimeDelta(long timeDelta, String unit){
+        String res = "";
+        if (timeDelta > 0){
+            res = Long.toString(timeDelta) + unit + ("s" != unit ? " " : "");
+        }
+        return res;
+    }
+
+
+
+
     public MarkerOptions getMarkerOptions(){
         Log.d("LOGFILIP marker", town + " " + location + " " + latLng.toString());
         return new MarkerOptions().position(latLng)
@@ -47,39 +118,71 @@ public class Bts {
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
     }
 
-    public String getNetworkOperator(){
-        return operatorName;
-    } //FIXME refactor
 
-    public String getTownAndRegion(){
-        return town + ", " + region;
+
+    private String handleNullString(String string){
+        return null == string ? "–" : string;
     }
 
+
+    public String getTown(){
+        return handleNullString(town);
+    }
     public String getLocation(){
-        return location;
+        return handleNullString(location);
     }
-
-    public int getNetworkMode(){
+    public String getOperatorName(){
+        return handleNullString(operatorName);
+    }
+    public String getRegion(){
+        return handleNullString(region);
+    }
+    public String getNetworkType(){
+        return handleNullString(networkType);
+    }
+    public int getNetworkGeneration(){
         return networkGeneration;
     }
+    public String getTimeAttached(){
+        return handleNullString(timeAttached);
+    }
 
+    private boolean sameLngLat(LatLng latLng1, LatLng latLng2){
+        double distanceInMeters = getLocation(latLng1).distanceTo(getLocation(latLng2));
+        return distanceInMeters < 1; // static final
+    }
 
-
-
+    private Location getLocation(LatLng latLng){
+        Location location = new Location("");
+        location.setLatitude(latLng.latitude);
+        location.setLatitude(latLng.latitude);
+        location.setLongitude(latLng.longitude);
+        return location;
+    }
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
+            Log.d("LOGFILIP", "EQUALS true   this == obj");
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
+            Log.d("LOGFILIP", "EQUALS false   obj == null");
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
+            Log.d("LOGFILIP", "EQUALS false   getClass() != obj.getClass()");
             return false;
+        }
         Bts other = (Bts) obj;
-        if (latLng == other.latLng &&
-                networkGeneration == other.networkGeneration &&
-                operatorName == other.operatorName) {
+        if (sameLngLat(latLng, other.latLng) &&
+                networkGeneration == other.networkGeneration) {
+            Log.d("LOGFILIP", "EQUALS true xx ");
             return true;
         } else {
+            Log.d("LOGFILIP", "EQUALS false " + sameLngLat(latLng, other.latLng) + " " +
+                    Boolean.toString(networkGeneration == other.networkGeneration));
+            Log.d("LOGFILIP", "DEBUG latLng " + latLng + " | " + other.latLng);
+            Log.d("LOGFILIP", "DEBUG networkGeneration " + networkGeneration + " | " + other.networkGeneration);
             return false;
         }
     }

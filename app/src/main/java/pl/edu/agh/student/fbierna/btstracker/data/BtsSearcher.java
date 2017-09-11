@@ -50,7 +50,7 @@ public class BtsSearcher {
             //exception
             return null;
         }
-        return new Bts(csvBtsData, operatorName, networkType, networkGeneration);
+        return new Bts(csvBtsData, operatorName, networkGeneration);
     }
 
     private void processCellInfo(CellInfo cellInfo){

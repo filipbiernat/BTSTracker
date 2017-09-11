@@ -2,15 +2,20 @@ package pl.edu.agh.student.fbierna.btstracker.data;
 
 import android.content.res.AssetManager;
 import android.telephony.CellInfo;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
+
+import static android.R.id.list;
 
 /**
  * Created by Filip on 10.09.2017.
@@ -19,13 +24,34 @@ import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 
 public class BtsManager {
 
+    private class BtsList extends LinkedList<Bts>{
+        private BtsList(){
+            super();
+        }
+
+        protected void addBts(Bts bts){
+            if (list.contains(bts)){
+                Log.d("LOGFILIP", "contains TRUE");
+                Bts existingBts = get(indexOf(bts));
+                Bts existingBtsCopy = new Bts(existingBts);
+                remove(existingBts);
+                add(existingBtsCopy);
+            } else {
+                Log.d("LOGFILIP", "contains FALSE");
+                list.add(bts);
+            }
+        }
+    }
+
     private BtsTracker btsTracker;
-    private List<Bts> list;
+    private BtsList list;
     private BtsSearcher btsSearcher;
+
+    private Date timeOfAttach;
 
     public BtsManager(BtsTracker btsTracker){
         this.btsTracker = btsTracker;
-        list = new LinkedList<>();
+        list = new BtsList();
         btsSearcher = new BtsSearcher(btsTracker);
 
 
@@ -33,7 +59,22 @@ public class BtsManager {
 
     public void switchToCell(CellInfo cellInfo, String operatorName, int networkType){
         Bts newBts = btsSearcher.search(cellInfo, operatorName, networkType);
-        list.add(newBts);
+
+        detachPresentBts();
+
+        list.addBts(newBts);
+    }
+
+    private void detachPresentBts(){
+        Date currentTime = Calendar.getInstance().getTime();
+        if (list.size() > 0)
+        {
+            Bts presentBts = list.getLast();
+            if (null != presentBts){
+                presentBts.detach(timeOfAttach, currentTime);
+            }
+        }
+        timeOfAttach = currentTime;
     }
 
     public Bts get(int position) {

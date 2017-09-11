@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
@@ -39,11 +40,23 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Bts bts = btsManager.get(position);
-        holder.textViewName.setText(bts.getNetworkOperator());
-        holder.textViewDescription.setText(bts.getTownAndRegion());
-        holder.textViewPrice.setText(bts.getLocation());
-        holder.setNetworkMode(bts.getNetworkMode());
-
+        if (null == bts){
+            holder.textViewTown.setText("NULL CELL");
+            holder.textViewLocation.setText(" - ");
+            holder.textViewOperatorName.setText(" - ");
+            holder.textViewRegion.setText(" - ");
+            holder.textViewTimeAttached.setText(" - ");
+            holder.textViewNetworkType.setText(" - ");
+            holder.setNetworkMode(2);//fix
+        } else {
+            holder.textViewTown.setText(bts.getTown());
+            holder.textViewLocation.setText(bts.getLocation());
+            holder.textViewOperatorName.setText(bts.getOperatorName());
+            holder.textViewRegion.setText(bts.getRegion());
+            holder.textViewTimeAttached.setText(bts.getTimeAttached());
+            holder.textViewNetworkType.setText(bts.getNetworkType());
+            holder.setNetworkMode(bts.getNetworkGeneration());//rename
+        }
     }
 
     @Override

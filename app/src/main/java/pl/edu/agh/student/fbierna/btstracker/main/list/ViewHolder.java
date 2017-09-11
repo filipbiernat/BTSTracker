@@ -13,15 +13,21 @@ import pl.edu.agh.student.fbierna.btstracker.R;
 
 public class ViewHolder  extends RecyclerView.ViewHolder{
     public Button networkButton;
-    public TextView textViewName;
-    public TextView textViewDescription;
-    public TextView textViewPrice;
+    public TextView textViewTown;
+    public TextView textViewLocation;
+    public TextView textViewOperatorName;
+    public TextView textViewRegion;
+    public TextView textViewTimeAttached;
+    public TextView textViewNetworkType;
     public ViewHolder(View v) {
         super(v);
         networkButton = (Button) v.findViewById(R.id.buttonNetwork);
-        textViewName = (TextView) v.findViewById(R.id.textViewName);
-        textViewDescription = (TextView) v.findViewById(R.id.textViewDescription);
-        textViewPrice = (TextView) v.findViewById(R.id.textViewPrice);
+        textViewTown = (TextView) v.findViewById(R.id.textViewTown);
+        textViewLocation = (TextView) v.findViewById(R.id.textViewLocation);
+        textViewOperatorName = (TextView) v.findViewById(R.id.textViewOperatorName);
+        textViewRegion = (TextView) v.findViewById(R.id.textViewRegion);
+        textViewTimeAttached = (TextView) v.findViewById(R.id.textViewTimeAttached);
+        textViewNetworkType = (TextView) v.findViewById(R.id.textViewNetworkType);
     }
 
     public void setNetworkMode(int network){

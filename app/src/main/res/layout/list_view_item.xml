@@ -40,35 +40,68 @@
                 android:paddingLeft="64dp">
 
                 <TextView
-                    android:id="@+id/textViewName"
+                    android:id="@+id/textViewTown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:paddingStart="10dp"
-                    android:text="Duża czcionka"
+                    android:text="textViewTown"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/indigo900" />
 
                 <TextView
-                    android:id="@+id/textViewDescription"
+                    android:id="@+id/textViewLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textViewName"
+                    android:layout_below="@+id/textViewTown"
                     android:paddingStart="10dp"
-                    android:text="Średnia czcionka"
+                    android:text="textViewLocation"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/indigo900" />
 
                 <TextView
-                    android:id="@+id/textViewPrice"
+                    android:id="@+id/textViewOperatorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textViewDescription"
+                    android:layout_below="@+id/textViewLocation"
                     android:paddingStart="10dp"
-                    android:text="Duża czcionka"
+                    android:text="textViewOperatorName"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/indigo900" />
+
+                <TextView
+                    android:id="@+id/textViewRegion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/textViewLocation"
+                    android:paddingStart="10dp"
+                    android:text="textViewRegion"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/indigo900" />
+
+                <TextView
+                    android:id="@+id/textViewTimeAttached"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textViewOperatorName"
+                    android:paddingStart="10dp"
+                    android:text="textViewTimeAttached"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/indigo900" />
+
+                <TextView
+                    android:id="@+id/textViewNetworkType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/textViewOperatorName"
+                    android:paddingStart="10dp"
+                    android:text="textViewNetworkType"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/indigo900" />
         </RelativeLayout>

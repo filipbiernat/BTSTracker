@@ -3,24 +3,29 @@ package pl.edu.agh.student.fbierna.btstracker.main.list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.scan.ScanService;
 
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public ListFragment() {
         // Required empty public constructor
@@ -49,12 +54,34 @@ public class ListFragment extends Fragment {
         ListAdapter adapter = new ListAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+
 
 
 
         FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab_home);
         fab.setOnClickListener(new FloatingActionButtonOnClickListener(fab));
 
+    }
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                Fragment fragment = new ListFragment();
+                if (fragment != null) {
+                    FragmentTransaction fragmentTransaction = getActivity().
+                            getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, fragment);
+                    fragmentTransaction.commit();
+                }
+            }
+        }, 500);
     }
 
     public class FloatingActionButtonOnClickListener implements View.OnClickListener {
