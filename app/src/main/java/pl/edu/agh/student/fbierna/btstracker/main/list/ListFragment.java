@@ -1,4 +1,4 @@
-package pl.edu.agh.student.fbierna.btstracker;
+package pl.edu.agh.student.fbierna.btstracker.main.list;
 
 
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
-import pl.edu.agh.student.fbierna.btstracker.list.ListAdapter;
+import pl.edu.agh.student.fbierna.btstracker.R;
+import pl.edu.agh.student.fbierna.btstracker.scan.ScanService;
+import pl.edu.agh.student.fbierna.btstracker.main.list.ListAdapter;
 
 
 public class ListFragment extends Fragment {
@@ -45,9 +44,7 @@ public class ListFragment extends Fragment {
 
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        //pies = makePies();
         layoutManager = new LinearLayoutManager(getActivity());
-//        pieLayoutManager = new GridLayoutManager(this,1);
 
         recyclerView.setLayoutManager(layoutManager);
         ListAdapter adapter = new ListAdapter(getActivity());

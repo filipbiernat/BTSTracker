@@ -1,4 +1,4 @@
-package pl.edu.agh.student.fbierna.btstracker;
+package pl.edu.agh.student.fbierna.btstracker.main;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -25,6 +25,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
+import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsData;
 import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsDataList;
 

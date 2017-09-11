@@ -1,4 +1,4 @@
-package pl.edu.agh.student.fbierna.btstracker;
+package pl.edu.agh.student.fbierna.btstracker.scan;
 
 import android.app.Service;
 import android.content.Context;
@@ -6,8 +6,13 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
+import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsChangeListener;
+import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
+
+import static java.security.AccessController.getContext;
 
 public class ScanService extends Service {
 
@@ -22,10 +27,12 @@ public class ScanService extends Service {
         @Override
         public void run() {
             TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            telephonyManager.listen(btsChangeListener, PhoneStateListener.LISTEN_CELL_LOCATION);
+            telephonyManager.listen(attachListener, PhoneStateListener.LISTEN_CELL_LOCATION);
         }
     }
 
+    private Thread scanThread;
+    private AttachListener attachListener;
 
     public ScanService() {
     }
@@ -33,10 +40,11 @@ public class ScanService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        btsChangeListener = new BtsChangeListener(this,
-                ((BtsTracker) getApplicationContext()).btsIdList,
-                ((BtsTracker) getApplicationContext()).btsDataList);
 
+        BtsTracker btsTracker = (BtsTracker) getApplicationContext();
+        BtsManager btsManager = btsTracker.getBtsManager();
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        attachListener = new AttachListener(btsManager, telephonyManager);
    }
 
     @Override
@@ -58,19 +66,5 @@ public class ScanService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
-
-    private Thread scanThread;
-/*r = new AirScanner();
-
-    public PhoneStateListener phoneStateListener = new PhoneStateListener() {
-
-        AirScanner airScanne
-        @Override
-        public void onCellLocationChanged (CellLocation location) {
-            airScanner.scan(ScanService.this);
-        }
-    };*/
-
-    private BtsChangeListener btsChangeListener;// = new BtsChangeListener(this, a);
 
 }

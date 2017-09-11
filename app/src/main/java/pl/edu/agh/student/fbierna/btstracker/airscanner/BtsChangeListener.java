@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.util.List;
 
+import pl.edu.agh.student.fbierna.btstracker.data.BtsSearcher;
+
 /**
  * Created by Filip on 14.08.2017.
  */
@@ -24,7 +26,7 @@ public class BtsChangeListener extends PhoneStateListener {
         this.context = context;
         this.btsIdList = btsIdList;
         this.btsDataList = btsDataList;
-        btsSearcher = new BtsSearcher(context);
+   /*     btsSearcher = new BtsSearcher(context);
 
 
 
@@ -44,10 +46,11 @@ public class BtsChangeListener extends PhoneStateListener {
         if (btsData != null){
             btsDataList.add(btsData);
         }
-
+*/
     }
 
     public void onCellLocationChanged (CellLocation location) {
+        /*
         Log.d("LOGFILIP", "scan");
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         List<CellInfo> cellInfoList = tm.getAllCellInfo();
@@ -59,6 +62,7 @@ public class BtsChangeListener extends PhoneStateListener {
             BtsId btsId = BtsId.generateBtsId(cellInfo);
             if (null != btsId){
                 btsIdList.add(btsId);//sprawdzaj czy jest na liscie
+                Log.d("LOGFILIP test", Integer.toString(tm.getNetworkType()));
                 BtsData btsData = btsSearcher.search(btsId);
                 if (btsData != null){
                     btsDataList.add(btsData);
@@ -66,7 +70,7 @@ public class BtsChangeListener extends PhoneStateListener {
 
             }
 
-        }
+        }*/
 
     }
 

@@ -1,4 +1,4 @@
-package pl.edu.agh.student.fbierna.btstracker;
+package pl.edu.agh.student.fbierna.btstracker.main;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -17,11 +17,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
+import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsIdList;
+import pl.edu.agh.student.fbierna.btstracker.main.list.ListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

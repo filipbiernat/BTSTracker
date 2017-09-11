@@ -1,4 +1,4 @@
-package pl.edu.agh.student.fbierna.btstracker.list;
+package pl.edu.agh.student.fbierna.btstracker.main.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,14 +25,14 @@ public class ViewHolder  extends RecyclerView.ViewHolder{
         textViewPrice = (TextView) v.findViewById(R.id.textViewPrice);
     }
 
-    public void setNetworkMode(Network network){
-        if (network == Network.GSM) {
+    public void setNetworkMode(int network){
+        if (network == 2) { //FIXME refactor
             networkButton.setBackgroundResource(R.drawable.circle_light);
             networkButton.setText("2G");
-        } else if (network == Network.WCDMA) {
+        } else if (network == 3) {
             networkButton.setBackgroundResource(R.drawable.circle_medium);
             networkButton.setText("3G");
-        } else if (network == Network.LTE) {
+        } else if (network == 4) {
             networkButton.setBackgroundResource(R.drawable.circle_dark);
             networkButton.setText("4G");
         } else {

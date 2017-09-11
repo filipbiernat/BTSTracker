@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.edu.agh.student.fbierna.btstracker.MainActivity">
+    tools:context="pl.edu.agh.student.fbierna.btstracker.main.MainActivity">
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.edu.agh.student.fbierna.btstracker.HomeFragment">
+    tools:context="pl.edu.agh.student.fbierna.btstracker.main.HomeFragment">
 
 
 
