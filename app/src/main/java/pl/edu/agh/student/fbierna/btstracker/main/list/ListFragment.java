@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.scan.ScanService;
-import pl.edu.agh.student.fbierna.btstracker.main.list.ListAdapter;
 
 
 public class ListFragment extends Fragment {
@@ -53,11 +52,8 @@ public class ListFragment extends Fragment {
 
 
 
-        Log.d("LOGFILIP", "h1");
         FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab_home);
-        Log.d("LOGFILIP", "h2");
         fab.setOnClickListener(new FloatingActionButtonOnClickListener(fab));
-        Log.d("LOGFILIP", "h3");
 
     }
 
@@ -80,11 +76,9 @@ public class ListFragment extends Fragment {
         private void switchState(){
             if (serviceEnabled){
                 stopService();
-                Log.d("LOGFILIP", "stopService");
                 //button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_send));
             } else {
                 startService();
-                Log.d("LOGFILIP", "startService");
                 //button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_camera));
             }
             //button.setRippleColor(Color.WHITE);

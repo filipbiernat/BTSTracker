@@ -3,8 +3,6 @@ package pl.edu.agh.student.fbierna.btstracker;
 import android.app.Application;
 import android.content.res.Configuration;
 
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsDataList;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsIdList;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
 /**
@@ -12,9 +10,6 @@ import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
  */
 
 public class BtsTracker extends Application {
-    public BtsIdList btsIdList = new BtsIdList();
-    public BtsDataList btsDataList = new BtsDataList();
-
     private BtsManager btsManager = new BtsManager(this);
 
     @Override

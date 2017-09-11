@@ -25,19 +25,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsData;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsDataList;
+import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
+    private BtsManager btsManager;
 
     public MapFragment() {
-
     }
 
     @Nullable
@@ -61,6 +62,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
         getActivity().setTitle("Menu 1");
+
+
+        BtsTracker btsTracker = (BtsTracker) getActivity().getApplicationContext();
+        btsManager = btsTracker.getBtsManager();
     }
 
     @Override
@@ -68,7 +73,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setZoomControlsEnabled(false);
-        //mMap.setMyLocationEnabled(true);
+        //mMap.setMyLocationEnabled(true); FIXME FB enable
 
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
@@ -106,10 +111,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         LatLng bochnia= new LatLng(49.965611, 20.454008);
 
-        BtsDataList btsDataList = ((BtsTracker) getActivity().getApplication()).btsDataList;
-
-        for(BtsData btsData : btsDataList.get()){
-            Marker marker = mMap.addMarker(btsData.getMarkerOptions());
+        ArrayList<MarkerOptions> markerOptionsList = btsManager.getMarkerOptions();
+        for (MarkerOptions markerOptions : markerOptionsList){
+            mMap.addMarker(markerOptions); //Marker marker =
         }
 
         Marker bochniaMarker = mMap.addMarker(new MarkerOptions().position(bochnia)

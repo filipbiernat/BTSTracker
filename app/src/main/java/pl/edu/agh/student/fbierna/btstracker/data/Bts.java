@@ -6,19 +6,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsId;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.Network;
-
-import static android.R.attr.data;
-
 /**
  * Created by Filip on 10.09.2017.
  */
 
 public class Bts {
-    //private int mcc;
-    //private int lac;
-    //private int id;
     private int networkGeneration;
     private String region;
     private String town;
@@ -42,9 +34,6 @@ public class Bts {
         double lat = Double.parseDouble(data[8]);
         double lng = Double.parseDouble(data[9]);
         latLng = new LatLng(lat, lng);
-
-        Log.d("LOGFILIP testowy", this.operatorName + " " + this.networkType + " " + this.networkGeneration + " " +
-                region+ " " + town + " " + location + " " + latLng.toString());
     }
 
     private String parseNetworkType(int networkType){

@@ -18,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsIdList;
+import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 import pl.edu.agh.student.fbierna.btstracker.main.list.ListFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -40,16 +40,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Log.d("LOGFILIP", "d1");
         Fragment fragment = new HomeFragment();
         if (fragment != null) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_frame, fragment);
             fragmentTransaction.commit();
         }
-        Log.d("LOGFILIP", "d2");
         checkPermissions();
-        Log.d("LOGFILIP", "d3");
 
 
 
@@ -126,7 +123,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void checkPermissions() {
-        Log.d("LOGFILIP", "p1");
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -149,8 +145,5 @@ public class MainActivity extends AppCompatActivity
                 // result of the request.
             }
         }
-        Log.d("LOGFILIP", "p2");
     }
-
-    private BtsIdList btsIdList = new BtsIdList();
 }

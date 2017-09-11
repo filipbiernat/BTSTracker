@@ -6,7 +6,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.Network;
 
 /**
  * Created by Filip on 03.09.2017.

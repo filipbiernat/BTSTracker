@@ -6,13 +6,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsChangeListener;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
-
-import static java.security.AccessController.getContext;
 
 public class ScanService extends Service {
 

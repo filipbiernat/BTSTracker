@@ -6,11 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsData;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsDataList;
 import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.data.Bts;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
@@ -20,16 +16,13 @@ import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
  */
 
 public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
-    Context mContext;
-    //ArrayList<BtsData> btsDataArrayList;
-    BtsManager btsManager;
-    LayoutInflater mInflater;
+    private Context mContext;
+    private BtsManager btsManager;
+    private LayoutInflater mInflater;
 
     public ListAdapter(Context context) {
         mContext = context;
         BtsTracker btsTracker = (BtsTracker) mContext.getApplicationContext();
-        //BtsDataList btsDataList = btsTracker.btsDataList;
-        //btsDataArrayList = btsDataList.get();
         btsManager = btsTracker.getBtsManager();
     }
 
@@ -45,13 +38,6 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        /*BtsData btsData = btsDataArrayList.get(position);
-        holder.textViewName.setText(btsData.getNetworkOperator());
-        holder.textViewDescription.setText(btsData.getTownAndRegion());
-        holder.textViewPrice.setText(btsData.getLocation());
-        holder.setNetworkMode(btsData.getNetworkMode());
-        */
-
         Bts bts = btsManager.get(position);
         holder.textViewName.setText(bts.getNetworkOperator());
         holder.textViewDescription.setText(bts.getTownAndRegion());

@@ -2,7 +2,7 @@ package pl.edu.agh.student.fbierna.btstracker;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

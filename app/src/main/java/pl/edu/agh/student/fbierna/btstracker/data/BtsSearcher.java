@@ -1,6 +1,5 @@
 package pl.edu.agh.student.fbierna.btstracker.data;
 
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.telephony.CellIdentityGsm;
 import android.telephony.CellIdentityLte;
@@ -9,18 +8,13 @@ import android.telephony.CellInfo;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
 import android.telephony.CellInfoWcdma;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsData;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.BtsId;
-import pl.edu.agh.student.fbierna.btstracker.airscanner.Network;
 
-import static android.R.attr.data;
 
 /**
  * Created by Filip on 27.08.2017.
@@ -29,7 +23,7 @@ import static android.R.attr.data;
 
 public class BtsSearcher {
 
-    private AssetManager assetManager;
+    private BtsTracker btsTracker;
     private BufferedReader reader = null;
     private static final String BTS_DATA_PATH = "btsData.csv";
     private static final String CSV_SPLIT_BY = ";";
@@ -44,8 +38,8 @@ public class BtsSearcher {
     int networkGeneration;
 
 
-    public BtsSearcher(AssetManager assetManager) {
-        this.assetManager = assetManager;
+    public BtsSearcher(BtsTracker btsTracker) {
+        this.btsTracker = btsTracker;
     }
 
     public Bts search(CellInfo cellInfo, String operatorName, int networkType){
@@ -104,7 +98,7 @@ public class BtsSearcher {
         String line = null;
         try {
             InputStreamReader inputStreamReader =
-                    new InputStreamReader(assetManager.open(BTS_DATA_PATH), "UTF-8");
+                    new InputStreamReader(btsTracker.getAssets().open(BTS_DATA_PATH), "UTF-8");
             reader = new BufferedReader(inputStreamReader);
 
             while ((line = reader.readLine()) != null) {

@@ -2,8 +2,11 @@ package pl.edu.agh.student.fbierna.btstracker.data;
 
 import android.content.res.AssetManager;
 import android.telephony.CellInfo;
-import android.util.Log;
 
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,9 +25,8 @@ public class BtsManager {
 
     public BtsManager(BtsTracker btsTracker){
         this.btsTracker = btsTracker;
-        list = new LinkedList<Bts>();
-        AssetManager assetManager = btsTracker.getApplicationContext().getAssets();
-        btsSearcher = new BtsSearcher(assetManager);
+        list = new LinkedList<>();
+        btsSearcher = new BtsSearcher(btsTracker);
 
 
     }
@@ -41,6 +43,14 @@ public class BtsManager {
 
     public int size() {
         return list.size();
+    }
+
+    public ArrayList<MarkerOptions> getMarkerOptions(){
+        ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
+        for (Bts bts : list) {
+            markerOptions.add(bts.getMarkerOptions());
+        }
+        return markerOptions;
     }
 
 
