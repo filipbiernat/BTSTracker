@@ -62,24 +62,24 @@
                     android:textColor="@color/indigo900" />
 
                 <TextView
-                    android:id="@+id/textViewOperatorName"
+                    android:id="@+id/textViewRegion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/textViewLocation"
                     android:paddingStart="10dp"
-                    android:text="textViewOperatorName"
+                    android:text="textViewRegion"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/indigo900" />
 
                 <TextView
-                    android:id="@+id/textViewRegion"
+                    android:id="@+id/textViewOperatorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/textViewLocation"
                     android:paddingStart="10dp"
-                    android:text="textViewRegion"
+                    android:text="textViewOperatorName"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/indigo900" />
 
@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textViewOperatorName"
+                    android:layout_below="@+id/textViewRegion"
                     android:paddingStart="10dp"
                     android:text="textViewTimeAttached"
                     android:textAppearance="?android:attr/textAppearanceSmall"
