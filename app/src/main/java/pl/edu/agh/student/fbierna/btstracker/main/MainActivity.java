@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -95,17 +96,11 @@ public class MainActivity extends AppCompatActivity
         //Log.d("LOGFILIP", "i" + Integer.toString(a.size()));
 
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             fragment = new HomeFragment();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_list) {
             fragment = new ListFragment();
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_map) {
             fragment = new MapFragment();
         }
 
