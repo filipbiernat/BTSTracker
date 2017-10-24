@@ -121,12 +121,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .snippet("Lorem Ipsum")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(bochnia, 6);
+        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(bochnia, 9);
         mMap.animateCamera(zoom);
 
 
-        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
-        fab.setOnClickListener(new FloatingActionButtonOnClickListener(fab, bochniaMarker));
+       // FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
+        //fab.setOnClickListener(new FloatingActionButtonOnClickListener(fab, bochniaMarker));
 
 
 

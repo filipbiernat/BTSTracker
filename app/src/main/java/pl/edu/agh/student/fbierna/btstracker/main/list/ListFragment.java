@@ -59,11 +59,6 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
 
 
-
-
-        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab_home);
-        fab.setOnClickListener(new FloatingActionButtonOnClickListener(fab));
-
     }
 
     @Override
@@ -82,44 +77,5 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             }
         }, 500);
-    }
-
-    public class FloatingActionButtonOnClickListener implements View.OnClickListener {
-
-        private FloatingActionButton button;
-        private boolean serviceEnabled;
-
-        public FloatingActionButtonOnClickListener(FloatingActionButton button) {
-            this.button = button;
-            serviceEnabled = true;
-            switchState();
-        }
-
-        @Override
-        public void onClick(View arg0) {
-            switchState();
-        }
-
-        private void switchState(){
-            if (serviceEnabled){
-                stopService();
-                //button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_send));
-            } else {
-                startService();
-                //button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_camera));
-            }
-            //button.setRippleColor(Color.WHITE);
-            serviceEnabled = !serviceEnabled;
-        }
-    }
-
-    public void startService() {
-        Intent intent = new Intent(getActivity(), ScanService.class);
-        getActivity().startService(intent);
-    }
-
-    public void stopService() {
-        Intent intent = new Intent(getActivity(), ScanService.class);
-        getActivity().stopService(intent);
     }
 }

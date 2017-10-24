@@ -1,7 +1,7 @@
 package pl.edu.agh.student.fbierna.btstracker.main;
 
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -37,53 +37,6 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.d("LOGFILIP", "h1");
-        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab_home);
-        Log.d("LOGFILIP", "h2");
-        fab.setOnClickListener(new FloatingActionButtonOnClickListener(fab));
-        Log.d("LOGFILIP", "h3");
 
-    }
-
-    public class FloatingActionButtonOnClickListener implements View.OnClickListener {
-
-        private FloatingActionButton button;
-        private boolean serviceEnabled;
-
-        public FloatingActionButtonOnClickListener(FloatingActionButton button) {
-            this.button = button;
-            serviceEnabled = true;
-            switchState();
-        }
-
-        @Override
-        public void onClick(View arg0) {
-            switchState();
-        }
-
-        private void switchState(){
-            if (serviceEnabled){
-                stopService();
-                Log.d("LOGFILIP", "stopService");
-                //button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_send));
-            } else {
-                startService();
-                Log.d("LOGFILIP", "startService");
-                //button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_camera));
-            }
-            //button.setRippleColor(Color.WHITE);
-            serviceEnabled = !serviceEnabled;
-        }
-    }
-
-    public void startService() {
-        Intent intent = new Intent(getActivity(), ScanService.class);
-        getActivity().startService(intent);
-    }
-
-    public void stopService() {
-        Intent intent = new Intent(getActivity(), ScanService.class);
-        getActivity().stopService(intent);
     }
 }
