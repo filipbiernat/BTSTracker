@@ -116,13 +116,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mMap.addMarker(markerOptions); //Marker marker =
         }
 
-        Marker bochniaMarker = mMap.addMarker(new MarkerOptions().position(bochnia)
-                .title("Marker in Bochnia")
-                .snippet("Lorem Ipsum")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(bochnia, 9);
-        mMap.animateCamera(zoom);
+        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(bochnia, 11);
+        mMap.moveCamera(zoom);
 
 
        // FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
