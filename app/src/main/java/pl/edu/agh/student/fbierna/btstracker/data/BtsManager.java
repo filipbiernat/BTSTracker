@@ -31,13 +31,11 @@ public class BtsManager {
 
         protected void addBts(Bts bts){
             if (list.contains(bts)){
-                Log.d("LOGFILIP", "contains TRUE");
                 Bts existingBts = get(indexOf(bts));
                 Bts existingBtsCopy = new Bts(existingBts);
                 remove(existingBts);
                 add(existingBtsCopy);
             } else {
-                Log.d("LOGFILIP", "contains FALSE");
                 list.add(bts);
             }
         }
@@ -89,7 +87,10 @@ public class BtsManager {
     public ArrayList<MarkerOptions> getMarkerOptions(){
         ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
         for (Bts bts : list) {
-            markerOptions.add(bts.getMarkerOptions());
+            MarkerOptions options = bts.getMarkerOptions();
+            if (options.getPosition() != null) {
+                markerOptions.add(options);
+            }
         }
         return markerOptions;
     }

@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         checkPermissions();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new FloatingActionButtonOnClickListener(fab));
+        fab.setOnClickListener(new FloatingActionButtonOnClickListener(this));
     }
 
 

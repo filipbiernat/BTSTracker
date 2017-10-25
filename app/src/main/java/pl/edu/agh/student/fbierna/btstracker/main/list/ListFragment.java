@@ -26,7 +26,7 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
+    private ListAdapter listAdapter;
     public ListFragment() {
         // Required empty public constructor
     }
@@ -51,8 +51,8 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         layoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
-        ListAdapter adapter = new ListAdapter(getActivity());
-        recyclerView.setAdapter(adapter);
+        listAdapter = new ListAdapter(getActivity());
+        recyclerView.setAdapter(listAdapter);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -68,13 +68,7 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Fragment fragment = new ListFragment();
-                if (fragment != null) {
-                    FragmentTransaction fragmentTransaction = getActivity().
-                            getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.content_frame, fragment);
-                    fragmentTransaction.commit();
-                }
+                listAdapter.notifyDataSetChanged();
             }
         }, 500);
     }
