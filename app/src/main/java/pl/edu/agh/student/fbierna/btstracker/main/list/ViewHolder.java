@@ -15,19 +15,19 @@ public class ViewHolder  extends RecyclerView.ViewHolder{
     public Button networkButton;
     public TextView textViewTown;
     public TextView textViewLocation;
-    public TextView textViewOperatorName;
+    public TextView textViewOperatorName;//todo rename
     public TextView textViewRegion;
     public TextView textViewTimeAttached;
-    public TextView textViewNetworkType;
+    //public TextView textViewNetworkType;
     public ViewHolder(View v) {
         super(v);
         networkButton = (Button) v.findViewById(R.id.buttonNetwork);
         textViewTown = (TextView) v.findViewById(R.id.textViewTown);
         textViewLocation = (TextView) v.findViewById(R.id.textViewLocation);
-        textViewOperatorName = (TextView) v.findViewById(R.id.textViewOperatorName);
-        textViewRegion = (TextView) v.findViewById(R.id.textViewRegion);
+        textViewOperatorName = (TextView) v.findViewById(R.id.textViewOperatorAndNetwork);
+        //textViewRegion = (TextView) v.findViewById(R.id.textViewRegion);
         textViewTimeAttached = (TextView) v.findViewById(R.id.textViewTimeAttached);
-        textViewNetworkType = (TextView) v.findViewById(R.id.textViewNetworkType);
+        //textViewNetworkType = (TextView) v.findViewById(R.id.textViewNetworkType);
     }
 
     public void setNetworkMode(int network){

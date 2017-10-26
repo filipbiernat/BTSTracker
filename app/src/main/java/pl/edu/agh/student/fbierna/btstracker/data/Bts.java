@@ -46,7 +46,7 @@ public class Bts {
         double lat = Double.parseDouble(data[8]);
         double lng = Double.parseDouble(data[9]);
         latLng = new LatLng(lat, lng);
-    }
+    }//todo remove region + connect operator + network
 
     public Bts(Bts other) {
         if (null != other) {

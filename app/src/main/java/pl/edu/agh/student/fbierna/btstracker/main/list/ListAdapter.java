@@ -44,17 +44,20 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
             holder.textViewTown.setText("NULL CELL");
             holder.textViewLocation.setText(" - ");
             holder.textViewOperatorName.setText(" - ");
-            holder.textViewRegion.setText(" - ");
+           // holder.textViewRegion.setText(" - ");
             holder.textViewTimeAttached.setText(" - ");
-            holder.textViewNetworkType.setText(" - ");
+            //holder.textViewNetworkType.setText(" - ");
             holder.setNetworkMode(2);//fix
         } else {
             holder.textViewTown.setText(bts.getTown());
             holder.textViewLocation.setText(bts.getLocation());
-            holder.textViewOperatorName.setText(bts.getOperatorName());
-            holder.textViewRegion.setText(bts.getRegion());
+
+            String operatorAndNetwork = bts.getOperatorName() + " \u2022 " +bts.getNetworkType();
+
+            holder.textViewOperatorName.setText(operatorAndNetwork);
+//            holder.textViewRegion.setText(bts.getRegion());
             holder.textViewTimeAttached.setText(bts.getTimeAttached());
-            holder.textViewNetworkType.setText(bts.getNetworkType());
+            //holder.textViewNetworkType.setText(bts.getNetworkType());
             holder.setNetworkMode(bts.getNetworkGeneration());//rename
         }
     }
