@@ -38,6 +38,7 @@ import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_center;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_info;
+import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_refresh;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.textViewLocation;
 
 
@@ -72,11 +73,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 getChildFragmentManager().findFragmentById(map);
         mapFragment.getMapAsync(this);
 
-        getActivity().setTitle("Menu 1");
-
 
         BtsTracker btsTracker = (BtsTracker) getActivity().getApplicationContext();
         btsManager = btsTracker.getBtsManager();
+
+        FloatingActionButton mapFabRefresh = (FloatingActionButton) getActivity().findViewById(map_fab_refresh);
+        mapFabRefresh.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                mMap.clear();
+                onMapReady(mMap);
+
+            }
+        });
 
         FloatingActionButton mapFabInfo = (FloatingActionButton) getActivity().findViewById(map_fab_info);
         mapFabInfo.setOnClickListener(new View.OnClickListener(){
@@ -102,6 +111,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             public void onClick(View arg0) {
                 CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
                 mMap.animateCamera(zoom);
+
             }
         });
     }

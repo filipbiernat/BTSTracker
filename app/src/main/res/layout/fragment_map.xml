@@ -19,13 +19,25 @@
         android:layout_alignParentStart="true" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/map_fab_info"
+        android:id="@+id/map_fab_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="22dp"
         android:layout_marginBottom="96dp"
+        android:tint="@color/white"
+        android:src="@drawable/map_refresh"
+        app:fabSize="mini"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/map_fab_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@id/map_fab_refresh"
         android:tint="@color/white"
         android:src="@drawable/map_info_enabled"
         app:fabSize="mini"/>
