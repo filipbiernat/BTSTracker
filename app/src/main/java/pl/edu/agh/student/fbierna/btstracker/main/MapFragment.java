@@ -117,7 +117,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
 
-        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(bochnia, 11);
+        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
         mMap.moveCamera(zoom);
 
 
@@ -134,34 +134,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    public class FloatingActionButtonOnClickListener implements View.OnClickListener {
-
+    public class CenterFloatingActionButtonOnClickListener implements View.OnClickListener {
+/*
         private FloatingActionButton button;
         private Marker bochniaMarker;
         private boolean infoWindowEnabled;
-
-        public FloatingActionButtonOnClickListener(FloatingActionButton button, Marker bochniaMarker) {
-            this.button = button;
+*/
+        public CenterFloatingActionButtonOnClickListener(FloatingActionButton button, Marker bochniaMarker) {
+           /* this.button = button;
             this.bochniaMarker = bochniaMarker;
             infoWindowEnabled = false;
-            switchState();
+            switchState();*/
         }
 
         @Override
         public void onClick(View arg0) {
-            switchState();
+
+            CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
+            mMap.moveCamera(zoom);
         }
 
-        private void switchState(){
-            if (infoWindowEnabled){
-                bochniaMarker.hideInfoWindow();
-                button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_send));
-            } else {
-                bochniaMarker.showInfoWindow();
-                button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_camera));
-            }
-            button.setRippleColor(Color.WHITE);
-            infoWindowEnabled = !infoWindowEnabled;
-        }
     }
 }

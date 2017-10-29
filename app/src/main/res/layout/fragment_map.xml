@@ -1,17 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2dp">
+
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context="pl.edu.agh.student.fbierna.btstracker.main.MapFragment">
+        tools:context="pl.edu.agh.student.fbierna.btstracker.MapsActivity"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context="pl.edu.agh.student.fbierna.btstracker.MapsActivity" />
-    </android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:layout_margin="8dp"
+        android:background="@color/white"
+        android:elevation="3dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/button_2g"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/circle_light"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/textView2g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/button_2g"
+            android:gravity="top"
+            android:text=" 2G  "
+            android:textColor="@color/text2"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/button_3g"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_toRightOf="@+id/textView2g"
+            android:background="@drawable/circle_medium"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/textView3g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/button_3g"
+            android:gravity="top"
+            android:text=" 3G  "
+            android:textColor="@color/text2"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/button_4g"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_toRightOf="@+id/textView3g"
+            android:background="@drawable/circle_dark"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/textView4g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/button_4g"
+            android:gravity="top"
+            android:text=" 4G"
+            android:textColor="@color/text2"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -108,14 +108,25 @@ public class Bts {
     }
 
 
-
-
+    private int getMarkerHue(){
+        if (networkGeneration == 2){
+            return 340; //make final static
+        }
+        if (networkGeneration == 3){
+            return 231;
+        }
+        if (networkGeneration == 4){
+            return 4;
+        }
+        return 0;
+        //exception
+    }
     public MarkerOptions getMarkerOptions(){
         Log.d("LOGFILIP marker", town + " " + location + " " + latLng.toString());
         return new MarkerOptions().position(latLng)
                 .title(town + " " + location)
                 .snippet("Lorem Ipsum")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                .icon(BitmapDescriptorFactory.defaultMarker(getMarkerHue()));
     }
 
 
@@ -128,8 +139,8 @@ public class Bts {
     public String getTown(){
         return handleNullString(town);
     }
-    public String getLocation(){
-        return handleNullString(location);
+    public LatLng getLatLng(){
+        return latLng;
     }
     public String getOperatorName(){
         return handleNullString(operatorName);
@@ -150,6 +161,10 @@ public class Bts {
     private boolean sameLngLat(LatLng latLng1, LatLng latLng2){
         double distanceInMeters = getLocation(latLng1).distanceTo(getLocation(latLng2));
         return distanceInMeters < 1; // static final
+    }
+
+    public String getLocation(){
+        return handleNullString(location);
     }
 
     private Location getLocation(LatLng latLng){

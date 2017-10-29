@@ -1,0 +1,238 @@
+diff --git a/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/data/Bts.java b/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/data/Bts.java
+index 929d2a3..6ff1bf9 100644
+--- a/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/data/Bts.java
++++ b/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/data/Bts.java
+@@ -108,14 +108,25 @@ public class Bts {
+     }
+ 
+ 
+-
+-
++    private int getMarkerHue(){
++        if (networkGeneration == 2){
++            return 340; //make final static
++        }
++        if (networkGeneration == 3){
++            return 231;
++        }
++        if (networkGeneration == 4){
++            return 4;
++        }
++        return 0;
++        //exception
++    }
+     public MarkerOptions getMarkerOptions(){
+         Log.d("LOGFILIP marker", town + " " + location + " " + latLng.toString());
+         return new MarkerOptions().position(latLng)
+                 .title(town + " " + location)
+                 .snippet("Lorem Ipsum")
+-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
++                .icon(BitmapDescriptorFactory.defaultMarker(getMarkerHue()));
+     }
+ 
+ 
+@@ -128,8 +139,8 @@ public class Bts {
+     public String getTown(){
+         return handleNullString(town);
+     }
+-    public String getLocation(){
+-        return handleNullString(location);
++    public LatLng getLatLng(){
++        return latLng;
+     }
+     public String getOperatorName(){
+         return handleNullString(operatorName);
+@@ -152,6 +163,10 @@ public class Bts {
+         return distanceInMeters < 1; // static final
+     }
+ 
++    public String getLocation(){
++        return handleNullString(location);
++    }
++
+     private Location getLocation(LatLng latLng){
+         Location location = new Location("");
+         location.setLatitude(latLng.latitude);
+diff --git a/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/data/BtsManager.java b/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/data/BtsManager.java
+index e182434..904ab30 100644
+--- a/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/data/BtsManager.java
++++ b/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/data/BtsManager.java
+@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
+ import android.telephony.CellInfo;
+ import android.util.Log;
+ 
++import com.google.android.gms.maps.model.LatLng;
+ import com.google.android.gms.maps.model.Marker;
+ import com.google.android.gms.maps.model.MarkerOptions;
+ 
+@@ -95,6 +96,7 @@ public class BtsManager {
+         return markerOptions;
+     }
+ 
+-
+-
+-}
++    public LatLng getTopBtsLatLng(){
++        return get(0).getLatLng();
++    }
++}
+\ No newline at end of file
+diff --git a/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/main/MapFragment.java b/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/main/MapFragment.java
+index 7036364..d9defc5 100644
+--- a/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/main/MapFragment.java
++++ b/app/src/main/java/pl/edu/agh/student/fbierna/btstracker/main/MapFragment.java
+@@ -117,7 +117,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
+         }
+ 
+ 
+-        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(bochnia, 11);
++        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
+         mMap.moveCamera(zoom);
+ 
+ 
+@@ -134,34 +134,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
+ 
+     }
+ 
+-    public class FloatingActionButtonOnClickListener implements View.OnClickListener {
+-
++    public class CenterFloatingActionButtonOnClickListener implements View.OnClickListener {
++/*
+         private FloatingActionButton button;
+         private Marker bochniaMarker;
+         private boolean infoWindowEnabled;
+-
+-        public FloatingActionButtonOnClickListener(FloatingActionButton button, Marker bochniaMarker) {
+-            this.button = button;
++*/
++        public CenterFloatingActionButtonOnClickListener(FloatingActionButton button, Marker bochniaMarker) {
++           /* this.button = button;
+             this.bochniaMarker = bochniaMarker;
+             infoWindowEnabled = false;
+-            switchState();
++            switchState();*/
+         }
+ 
+         @Override
+         public void onClick(View arg0) {
+-            switchState();
+-        }
+ 
+-        private void switchState(){
+-            if (infoWindowEnabled){
+-                bochniaMarker.hideInfoWindow();
+-                button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_send));
+-            } else {
+-                bochniaMarker.showInfoWindow();
+-                button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_camera));
+-            }
+-            button.setRippleColor(Color.WHITE);
+-            infoWindowEnabled = !infoWindowEnabled;
++            CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
++            mMap.moveCamera(zoom);
+         }
++
+     }
+ }
+\ No newline at end of file
+diff --git a/app/src/main/res/layout/fragment_map.xml b/app/src/main/res/layout/fragment_map.xml
+index 1f2da9f..21dfd1a 100644
+--- a/app/src/main/res/layout/fragment_map.xml
++++ b/app/src/main/res/layout/fragment_map.xml
+@@ -1,17 +1,84 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ 
+-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:id="@+id/margin"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:padding="2dp">
++
++
++    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:tools="http://schemas.android.com/tools"
++        android:id="@+id/map"
++        android:name="com.google.android.gms.maps.SupportMapFragment"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+-        xmlns:app="http://schemas.android.com/apk/res-auto"
+-        tools:context="pl.edu.agh.student.fbierna.btstracker.main.MapFragment">
+-
+-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+-            xmlns:tools="http://schemas.android.com/tools"
+-            android:id="@+id/map"
+-            android:name="com.google.android.gms.maps.SupportMapFragment"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            tools:context="pl.edu.agh.student.fbierna.btstracker.MapsActivity" />
+-    </android.support.constraint.ConstraintLayout>
++        tools:context="pl.edu.agh.student.fbierna.btstracker.MapsActivity"
++        android:layout_alignParentTop="true"
++        android:layout_alignParentStart="true" />
++
++    <RelativeLayout
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:padding="2dp"
++        android:layout_margin="8dp"
++        android:background="@color/white"
++        android:elevation="3dp"
++        android:layout_alignParentTop="true"
++        android:layout_centerHorizontal="true">
++
++        <Button
++            android:id="@+id/button_2g"
++            android:layout_width="10dp"
++            android:layout_height="10dp"
++            android:background="@drawable/circle_light"
++            android:layout_centerVertical="true"
++            android:layout_alignParentStart="true" />
++
++        <TextView
++            android:id="@+id/textView2g"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_toRightOf="@+id/button_2g"
++            android:gravity="top"
++            android:text=" 2G  "
++            android:textColor="@color/text2"
++            android:textSize="12sp" />
++
++        <Button
++            android:id="@+id/button_3g"
++            android:layout_width="10dp"
++            android:layout_height="10dp"
++            android:layout_toRightOf="@+id/textView2g"
++            android:background="@drawable/circle_medium"
++            android:layout_centerVertical="true"/>
++
++        <TextView
++            android:id="@+id/textView3g"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_toRightOf="@+id/button_3g"
++            android:gravity="top"
++            android:text=" 3G  "
++            android:textColor="@color/text2"
++            android:textSize="12sp" />
++
++        <Button
++            android:id="@+id/button_4g"
++            android:layout_width="10dp"
++            android:layout_height="10dp"
++            android:layout_toRightOf="@+id/textView3g"
++            android:background="@drawable/circle_dark"
++            android:layout_centerVertical="true" />
++
++        <TextView
++            android:id="@+id/textView4g"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_toRightOf="@+id/button_4g"
++            android:gravity="top"
++            android:text=" 4G"
++            android:textColor="@color/text2"
++            android:textSize="12sp" />
++    </RelativeLayout>
++</RelativeLayout>

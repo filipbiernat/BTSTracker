@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.telephony.CellInfo;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -95,6 +96,7 @@ public class BtsManager {
         return markerOptions;
     }
 
-
-
+    public LatLng getTopBtsLatLng(){
+        return get(0).getLatLng();
+    }
 }
