@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context="pl.edu.agh.student.fbierna.btstracker.main.MainActivity">
 
-<!--TODO WTF REMOVE BELOW-->
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:tint="@android:color/white"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
