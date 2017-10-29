@@ -3,6 +3,7 @@ package pl.edu.agh.student.fbierna.btstracker.main;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,8 +33,10 @@ import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
+import static pl.edu.agh.student.fbierna.btstracker.R.drawable.marker;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_center;
+import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_info;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.textViewLocation;
 
 
@@ -41,8 +45,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
 
     private BtsManager btsManager;
+    private ArrayList<Marker> markers;
 
     public MapFragment() {
+        markers = new ArrayList<>();
     }
 
     @Nullable
@@ -70,6 +76,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         BtsTracker btsTracker = (BtsTracker) getActivity().getApplicationContext();
         btsManager = btsTracker.getBtsManager();
+
+        FloatingActionButton mapFabInfo = (FloatingActionButton) getActivity().findViewById(map_fab_info);
+        mapFabInfo.setOnClickListener(new View.OnClickListener(){
+            private Boolean hidden = false;
+            @Override
+            public void onClick(View view) {
+                if (hidden){
+                    showInfoWindows();
+                } else {
+                    hideInfoWindows();
+                }
+                FloatingActionButton floatingActionButton = (FloatingActionButton) view;
+                int id = hidden ? R.drawable.map_info_enabled : R.drawable.map_info_disabled;
+                Drawable drawable = getActivity().getResources().getDrawable(id, getActivity().getTheme());
+                floatingActionButton.setImageDrawable(drawable);
+                hidden = !hidden;
+            }
+        });
 
         FloatingActionButton mapFabCenter = (FloatingActionButton) getActivity().findViewById(map_fab_center);
         mapFabCenter.setOnClickListener(new View.OnClickListener(){
@@ -119,17 +143,30 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-
+        markers.clear();
         ArrayList<MarkerOptions> markerOptionsList = btsManager.getMarkerOptions();
         for (MarkerOptions markerOptions : markerOptionsList){
-            mMap.addMarker(markerOptions); //Marker marker =
+            Marker marker = mMap.addMarker(markerOptions);
+            markers.add(marker);
         }
-
+        showInfoWindows();
 
         CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
         mMap.moveCamera(zoom);
 
 
+    }
+
+    private void hideInfoWindows(){
+        for (Marker marker : markers){
+            marker.hideInfoWindow();
+        }
+    }
+
+    private void showInfoWindows(){
+        for (Marker marker : markers){
+            marker.showInfoWindow();
+        }
     }
 
 }
