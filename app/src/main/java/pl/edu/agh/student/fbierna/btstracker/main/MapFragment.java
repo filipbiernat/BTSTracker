@@ -35,6 +35,7 @@ import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
 import static pl.edu.agh.student.fbierna.btstracker.R.drawable.marker;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
+import static pl.edu.agh.student.fbierna.btstracker.R.id.map;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_center;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_info;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.textViewLocation;
@@ -68,7 +69,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment)
-                getChildFragmentManager().findFragmentById(R.id.map);
+                getChildFragmentManager().findFragmentById(map);
         mapFragment.getMapAsync(this);
 
         getActivity().setTitle("Menu 1");
@@ -139,9 +140,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 textViewOperatorAndNetwork.setText(snippetSeparated[2]);
 
                 return view;
-
             }
         });
+
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            public void onInfoWindowClick(Marker marker) {
+                marker.hideInfoWindow();
+            }
+        });
+
 
         markers.clear();
         ArrayList<MarkerOptions> markerOptionsList = btsManager.getMarkerOptions();
