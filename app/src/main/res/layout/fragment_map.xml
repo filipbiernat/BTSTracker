@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/margin"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="2dp">
 
 
@@ -16,6 +17,19 @@
         tools:context="pl.edu.agh.student.fbierna.btstracker.MapsActivity"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/map_fab_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="96dp"
+        android:tint="@color/white"
+        android:src="@drawable/fab_map_center"
+        app:fabSize="mini"/>
+
 
     <RelativeLayout
         android:layout_width="wrap_content"

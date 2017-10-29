@@ -31,6 +31,9 @@ import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
+import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
+import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_center;
+
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -66,6 +69,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         BtsTracker btsTracker = (BtsTracker) getActivity().getApplicationContext();
         btsManager = btsTracker.getBtsManager();
+
+        FloatingActionButton mapFabCenter = (FloatingActionButton) getActivity().findViewById(map_fab_center);
+        mapFabCenter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
+                mMap.animateCamera(zoom);
+            }
+        });
     }
 
     @Override
@@ -109,8 +121,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
 
 
-        LatLng bochnia= new LatLng(49.965611, 20.454008);
-
         ArrayList<MarkerOptions> markerOptionsList = btsManager.getMarkerOptions();
         for (MarkerOptions markerOptions : markerOptionsList){
             mMap.addMarker(markerOptions); //Marker marker =
@@ -121,38 +131,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(zoom);
 
 
-       // FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
-        //fab.setOnClickListener(new FloatingActionButtonOnClickListener(fab, bochniaMarker));
-
-
-
-
-
-
-
-
-
     }
 
-    public class CenterFloatingActionButtonOnClickListener implements View.OnClickListener {
-/*
-        private FloatingActionButton button;
-        private Marker bochniaMarker;
-        private boolean infoWindowEnabled;
-*/
-        public CenterFloatingActionButtonOnClickListener(FloatingActionButton button, Marker bochniaMarker) {
-           /* this.button = button;
-            this.bochniaMarker = bochniaMarker;
-            infoWindowEnabled = false;
-            switchState();*/
-        }
-
-        @Override
-        public void onClick(View arg0) {
-
-            CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
-            mMap.moveCamera(zoom);
-        }
-
-    }
 }
