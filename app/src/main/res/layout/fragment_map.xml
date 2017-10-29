@@ -43,11 +43,12 @@
 
         <Button
             android:id="@+id/button_2g"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:background="@drawable/circle_light"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/marker"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:backgroundTint="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/textView2g"
@@ -61,11 +62,12 @@
 
         <Button
             android:id="@+id/button_3g"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_toRightOf="@+id/textView2g"
-            android:background="@drawable/circle_medium"
-            android:layout_centerVertical="true"/>
+            android:background="@drawable/marker"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/textView3g"
@@ -79,11 +81,12 @@
 
         <Button
             android:id="@+id/button_4g"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_toRightOf="@+id/textView3g"
-            android:background="@drawable/circle_dark"
-            android:layout_centerVertical="true" />
+            android:background="@drawable/marker"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/red"/>
 
         <TextView
             android:id="@+id/textView4g"

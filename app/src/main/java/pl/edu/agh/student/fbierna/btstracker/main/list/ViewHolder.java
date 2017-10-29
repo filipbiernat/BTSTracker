@@ -32,13 +32,13 @@ public class ViewHolder  extends RecyclerView.ViewHolder{
 
     public void setNetworkMode(int network){
         if (network == 2) { //FIXME refactor
-            networkButton.setBackgroundResource(R.drawable.circle_light);
+            networkButton.setBackgroundResource(R.drawable.circle_2g);
             networkButton.setText("2G");
         } else if (network == 3) {
-            networkButton.setBackgroundResource(R.drawable.circle_medium);
+            networkButton.setBackgroundResource(R.drawable.circle_3g);
             networkButton.setText("3G");
         } else if (network == 4) {
-            networkButton.setBackgroundResource(R.drawable.circle_dark);
+            networkButton.setBackgroundResource(R.drawable.circle_4g);
             networkButton.setText("4G");
         } else {
             //exception
