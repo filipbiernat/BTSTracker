@@ -122,10 +122,13 @@ public class Bts {
         //exception
     }
     public MarkerOptions getMarkerOptions(){
+        //TODO separete getter
+        String operatorAndNetwork =  getOperatorName() + " \u2022 " + getNetworkType();
+
         Log.d("LOGFILIP marker", town + " " + location + " " + latLng.toString());
         return new MarkerOptions().position(latLng)
-                .title(town + " " + location)
-                .snippet("Lorem Ipsum")
+                .title(town)
+                .snippet(timeAttached+";;"+location+";;"+operatorAndNetwork)
                 .icon(BitmapDescriptorFactory.defaultMarker(getMarkerHue()));
     }
 

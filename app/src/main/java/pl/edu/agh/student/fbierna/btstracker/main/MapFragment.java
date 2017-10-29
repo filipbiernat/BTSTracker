@@ -33,6 +33,7 @@ import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
 import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_center;
+import static pl.edu.agh.student.fbierna.btstracker.R.id.textViewLocation;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -98,24 +99,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             public View getInfoContents(Marker marker) {
                 Context context = getActivity();
 
-                LinearLayout info = new LinearLayout(context);
-                info.setOrientation(LinearLayout.VERTICAL);
-                info.setBackgroundColor(Color.WHITE);
+                View view = getActivity().getLayoutInflater().inflate(R.layout.map_view_item, null);
 
-                TextView title = new TextView(context);
-                title.setTextColor(Color.BLACK);
-                title.setGravity(Gravity.CENTER);
-                title.setTypeface(null, Typeface.BOLD);
-                title.setText(marker.getTitle());
+                TextView textViewTown = (TextView) view.findViewById(R.id.textViewTown);
+                textViewTown.setText(marker.getTitle());
 
-                TextView snippet = new TextView(context);
-                snippet.setTextColor(Color.GRAY);
-                snippet.setText(marker.getSnippet());
+                TextView textViewTimeAttached = (TextView) view.findViewById(R.id.textViewTimeAttached);
+                TextView textViewLocation = (TextView) view.findViewById(R.id.textViewLocation);
+                TextView textViewOperatorAndNetwork = (TextView) view.findViewById(R.id.textViewOperatorAndNetwork);
 
-                info.addView(title);
-                info.addView(snippet);
+                String snippet = marker.getSnippet();
+                String[] snippetSeparated = snippet.split(";;");
+                textViewTimeAttached.setText(snippetSeparated[0]);
+                textViewLocation.setText(snippetSeparated[1]);
+                textViewOperatorAndNetwork.setText(snippetSeparated[2]);
 
-                return info;
+                return view;
 
             }
         });
