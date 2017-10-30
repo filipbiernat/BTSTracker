@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
-import pl.edu.agh.student.fbierna.btstracker.main.list.ListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

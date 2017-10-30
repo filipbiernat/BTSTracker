@@ -12,7 +12,7 @@ import pl.edu.agh.student.fbierna.btstracker.data.Bts;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
 
-class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
     private final Context mContext;
     private final BtsManager btsManager;
 

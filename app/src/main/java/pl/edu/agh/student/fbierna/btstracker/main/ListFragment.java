@@ -1,4 +1,4 @@
-package pl.edu.agh.student.fbierna.btstracker.main.list;
+package pl.edu.agh.student.fbierna.btstracker.main;
 
 
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
+import pl.edu.agh.student.fbierna.btstracker.main.list.ListAdapter;
 
 
 public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
