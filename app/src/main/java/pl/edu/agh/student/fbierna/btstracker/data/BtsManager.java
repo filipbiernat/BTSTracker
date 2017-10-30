@@ -30,14 +30,16 @@ public class BtsManager {
             super();
         }
 
-        protected void addBts(Bts bts){
+        protected Boolean addBts(Bts bts){
             if (list.contains(bts)){
                 Bts existingBts = get(indexOf(bts));
                 Bts existingBtsCopy = new Bts(existingBts);
                 remove(existingBts);
                 add(existingBtsCopy);
+                return false;
             } else {
                 list.add(bts);
+                return true;
             }
         }
     }
@@ -61,7 +63,19 @@ public class BtsManager {
 
         detachPresentBts();
 
-        list.addBts(newBts);
+        boolean isAlreadyAdded = list.addBts(newBts);
+
+        if (isAlreadyAdded) {
+            for (Bts bts : list) {
+                if (!bts.equals(list.getLast()) &&
+                        newBts.sameLngLat(bts.getLatLng()) &&
+                        bts.getRotation() == 0) {
+                    bts.setRotation(30);
+                    newBts.setRotation(-30);
+                }
+            }
+        }
+
     }
 
     private void detachPresentBts(){

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static android.R.attr.data;
+import static android.R.attr.rotation;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
@@ -28,6 +29,7 @@ public class Bts {
     private LatLng latLng;
     private long timeAttachedLong;
     private String timeAttached;
+    private int rotation = 0;
 
     private static final String CSV_SPLIT_BY = ";";
 
@@ -59,6 +61,7 @@ public class Bts {
             latLng = other.latLng;
             timeAttachedLong = other.timeAttachedLong;
             timeAttached = other.timeAttached;
+            rotation = other.rotation;
         } else {
             networkGeneration = 2;
             region = " - ";
@@ -69,6 +72,7 @@ public class Bts {
             latLng = null;
             timeAttachedLong = 0;
             timeAttached = " - ";
+            rotation = 0;
         }
     }
 
@@ -97,6 +101,13 @@ public class Bts {
         String ddhhmmss = ddhhmm + convertTimeDelta(s, "s");
         timeAttached = ddhhmmss;
         Log.d("LOGFILIP", "timeAttached || " + timeAttached);
+    }
+
+    public void setRotation(int rotation){
+        this.rotation = rotation;
+    }
+    public int getRotation(){
+        return rotation;
     }
 
     private String convertTimeDelta(long timeDelta, String unit){
@@ -129,7 +140,8 @@ public class Bts {
         return new MarkerOptions().position(latLng)
                 .title(town)
                 .snippet(timeAttached+";;"+location+";;"+operatorAndNetwork)
-                .icon(BitmapDescriptorFactory.defaultMarker(getMarkerHue()));
+                .icon(BitmapDescriptorFactory.defaultMarker(getMarkerHue()))
+                .rotation(rotation);
     }
 
 
@@ -161,8 +173,8 @@ public class Bts {
         return handleNullString(timeAttached);
     }
 
-    private boolean sameLngLat(LatLng latLng1, LatLng latLng2){
-        double distanceInMeters = getLocation(latLng1).distanceTo(getLocation(latLng2));
+    public boolean sameLngLat(LatLng other){
+        double distanceInMeters = getLocation(latLng).distanceTo(getLocation(other));
         return distanceInMeters < 1; // static final
     }
 
@@ -192,15 +204,11 @@ public class Bts {
             return false;
         }
         Bts other = (Bts) obj;
-        if (sameLngLat(latLng, other.latLng) &&
+        if (sameLngLat(other.latLng) &&
                 networkGeneration == other.networkGeneration) {
             Log.d("LOGFILIP", "EQUALS true xx ");
             return true;
         } else {
-            Log.d("LOGFILIP", "EQUALS false " + sameLngLat(latLng, other.latLng) + " " +
-                    Boolean.toString(networkGeneration == other.networkGeneration));
-            Log.d("LOGFILIP", "DEBUG latLng " + latLng + " | " + other.latLng);
-            Log.d("LOGFILIP", "DEBUG networkGeneration " + networkGeneration + " | " + other.networkGeneration);
             return false;
         }
     }
