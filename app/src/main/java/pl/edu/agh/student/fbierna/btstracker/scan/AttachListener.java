@@ -17,7 +17,6 @@ class AttachListener extends PhoneStateListener {
     public AttachListener(BtsManager btsManager, TelephonyManager telephonyManager) {
         this.btsManager = btsManager;
         this.telephonyManager = telephonyManager;
-
     }
 
     public void onCellLocationChanged (CellLocation location) {

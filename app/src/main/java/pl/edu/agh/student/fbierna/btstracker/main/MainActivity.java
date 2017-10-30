@@ -70,11 +70,6 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         int id = item.getItemId();
 
-        //BtsIdList a = ((BtsTracker) getApplicationContext()).btsIdList;
-
-        //Log.d("LOGFILIP", "i" + Integer.toString(a.size()));
-
-
         if (id == R.id.nav_home) {
             fragment = new HomeFragment();
         } else if (id == R.id.nav_list) {

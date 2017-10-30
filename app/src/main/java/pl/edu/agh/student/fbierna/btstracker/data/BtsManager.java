@@ -42,8 +42,6 @@ public class BtsManager {
     public BtsManager(BtsTracker btsTracker){
         list = new BtsList();
         btsSearcher = new BtsSearcher(btsTracker);
-
-
     }
 
     public void switchToCell(CellInfo cellInfo, String operatorName, int networkType){
@@ -63,7 +61,6 @@ public class BtsManager {
                 }
             }
         }
-
     }
 
     private void detachPresentBts(){

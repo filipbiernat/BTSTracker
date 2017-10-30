@@ -37,21 +37,15 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
         if (null == bts){
             holder.textViewTown.setText("NULL CELL");
             holder.textViewLocation.setText(" - ");
-            holder.textViewOperatorName.setText(" - ");
-           // holder.textViewRegion.setText(" - ");
+            holder.textViewOperatorAndNetwork.setText(" - ");
             holder.textViewTimeAttached.setText(" - ");
-            //holder.textViewNetworkType.setText(" - ");
-            holder.setNetworkMode(2);//fix
+            holder.setNetworkMode(2);
         } else {
             holder.textViewTown.setText(bts.getTown());
             holder.textViewLocation.setText(bts.getLocation());
-
-            String operatorAndNetwork = bts.getOperatorName() + " \u2022 " +bts.getNetworkType();
-
-            holder.textViewOperatorName.setText(operatorAndNetwork);
+            holder.textViewOperatorAndNetwork.setText(bts.getOperatorAndNetwork());
             holder.textViewTimeAttached.setText(bts.getTimeAttached());
-            //holder.textViewNetworkType.setText(bts.getNetworkType());
-            holder.setNetworkMode(bts.getNetworkGeneration());//rename
+            holder.setNetworkMode(bts.getNetworkGeneration());
         }
     }
 

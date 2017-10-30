@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Bts {
     private final int networkGeneration;
-    private final String region;
     private final String town;
     private final String location;
     private final String operatorName;
@@ -37,7 +36,6 @@ public class Bts {
 
         String[] data = csvData.split(CSV_SPLIT_BY);
 
-        region = data[5];
         town = data[6];
         location = data[7];
         double lat = Double.parseDouble(data[8]);
@@ -48,7 +46,6 @@ public class Bts {
     public Bts(Bts other) {
         if (null != other) {
             networkGeneration = other.networkGeneration;
-            region = other.region;
             town = other.town;
             location = other.location;
             operatorName = other.operatorName;
@@ -59,7 +56,6 @@ public class Bts {
             rotation = other.rotation;
         } else {
             networkGeneration = 2;
-            region = " - ";
             town = " - ";
             location = " - ";
             operatorName = " - ";
@@ -82,19 +78,16 @@ public class Bts {
 
     public void detach(Date timeOfAttach, Date currentTime){
         timeAttachedLong += currentTime.getTime() - timeOfAttach.getTime();
-        Log.d("LOGFILIP", "time2 || " + timeOfAttach + " | " + currentTime);
-        long d = TimeUnit.MILLISECONDS.toDays(timeAttachedLong);
-        long h = TimeUnit.MILLISECONDS.toHours(timeAttachedLong) % 24;
-        long m = TimeUnit.MILLISECONDS.toMinutes(timeAttachedLong) % 60;
-        long s = TimeUnit.MILLISECONDS.toSeconds(timeAttachedLong) % 60;
 
-        Log.d("LOGFILIP", "timeAttachedLong || " + timeAttachedLong + " d " + d + " m " + m + " s " + s);
+        final long d = TimeUnit.MILLISECONDS.toDays(timeAttachedLong);
+        final long h = TimeUnit.MILLISECONDS.toHours(timeAttachedLong) % 24;
+        final long m = TimeUnit.MILLISECONDS.toMinutes(timeAttachedLong) % 60;
+        final long s = TimeUnit.MILLISECONDS.toSeconds(timeAttachedLong) % 60;
 
         String dd = convertTimeDelta(d, "d");
         String ddhh = dd + convertTimeDelta(h, "h");
         String ddhhmm = ddhh + convertTimeDelta(m, "min");
         timeAttached = ddhhmm + convertTimeDelta(s, "s");
-        Log.d("LOGFILIP", "timeAttached || " + timeAttached);
     }
 
     public void setRotation(int rotation){
@@ -127,13 +120,10 @@ public class Bts {
         //exception
     }
     public MarkerOptions getMarkerOptions(){
-        //TODO separete getter
-        String operatorAndNetwork =  getOperatorName() + " \u2022 " + getNetworkType();
 
-        Log.d("LOGFILIP marker", town + " " + location + " " + latLng.toString());
         return new MarkerOptions().position(latLng)
                 .title(town)
-                .snippet(timeAttached+";;"+location+";;"+operatorAndNetwork)
+                .snippet(timeAttached+";;"+location+";;"+getOperatorAndNetwork())
                 .icon(BitmapDescriptorFactory.defaultMarker(getMarkerHue()))
                 .rotation(rotation);
     }
@@ -151,14 +141,8 @@ public class Bts {
     public LatLng getLatLng(){
         return latLng;
     }
-    public String getOperatorName(){
-        return handleNullString(operatorName);
-    }
-    public String getRegion(){
-        return handleNullString(region);
-    }
-    public String getNetworkType(){
-        return handleNullString(networkType);
+    public String getOperatorAndNetwork(){
+        return handleNullString(operatorName) + " \u2022 " + handleNullString(networkType);
     }
     public int getNetworkGeneration(){
         return networkGeneration;
@@ -169,7 +153,7 @@ public class Bts {
 
     public boolean sameLngLat(LatLng other){
         double distanceInMeters = getLocation(latLng).distanceTo(getLocation(other));
-        return distanceInMeters < 1; // static final
+        return distanceInMeters < 1;
     }
 
     public String getLocation(){

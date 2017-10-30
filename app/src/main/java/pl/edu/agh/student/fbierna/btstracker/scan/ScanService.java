@@ -47,7 +47,6 @@ public class ScanService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         scanThread = new Thread(new ScanThread(startId));
         scanThread.start();
-
         return START_STICKY;
     }
 
@@ -57,10 +56,8 @@ public class ScanService extends Service {
         super.onDestroy();
     }
 
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
-
 }

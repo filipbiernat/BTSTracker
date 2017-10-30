@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,32 +23,30 @@ class FloatingActionButtonOnClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switchState(view.getContext());
-        switchDrawable(view, view.getContext()); //TODO variable context
+        Context context = view.getContext();
+        switchState(context);
+        switchDrawable(view, context);
     }
 
     private void switchState(Context context){
         if (serviceEnabled) {
             stopService(context);
         } else {
-                startService(context);
-            Log.d("LOGFILIP", "startService");
-            //button.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_camera));
+            startService(context);
         }
-        //button.setRippleColor(Color.WHITE);
         serviceEnabled = !serviceEnabled;
     }
 
     private void startService(Context context) {
         Intent intent = new Intent(context, ScanService.class);
         mainActivity.startService(intent);
-        Toast.makeText(context, "Service started", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Scanning enabled", Toast.LENGTH_SHORT).show();
     }
 
     private void stopService(Context context) {
         Intent intent = new Intent(context, ScanService.class);
         mainActivity.stopService(intent);
-        Toast.makeText(context, "Service stoped", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Scanning disabled", Toast.LENGTH_SHORT).show();
     }
 
     private void switchDrawable(View view, Context context){

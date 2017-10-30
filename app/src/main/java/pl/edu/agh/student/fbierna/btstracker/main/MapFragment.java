@@ -125,13 +125,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             public void onInfoWindowClick(Marker marker) {
                 marker.hideInfoWindow();
             }
         });
-
 
         markers.clear();
         ArrayList<MarkerOptions> markerOptionsList = btsManager.getMarkerOptions();
@@ -139,25 +137,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             Marker marker = mMap.addMarker(markerOptions);
             markers.add(marker);
         }
-        showInfoWindows();
 
         CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
         mMap.moveCamera(zoom);
-
-
-    }
-
-// --Commented out by Inspection START (30.10.2017 19:56):
-//    private void hideInfoWindows(){
-//        for (Marker marker : markers){
-//            marker.hideInfoWindow();
-//        }
-//    }
-// --Commented out by Inspection STOP (30.10.2017 19:56)
-
-    private void showInfoWindows(){
-        for (Marker marker : markers){
-            marker.showInfoWindow();
-        }
     }
 }
