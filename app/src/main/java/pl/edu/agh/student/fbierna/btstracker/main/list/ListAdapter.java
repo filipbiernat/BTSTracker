@@ -19,7 +19,6 @@ import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
     private Context mContext;
     private BtsManager btsManager;
-    private LayoutInflater mInflater;
 
     public ListAdapter(Context context) {
         mContext = context;
@@ -32,9 +31,8 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_view_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v);
 
-        return viewHolder;
+        return new ViewHolder(v);
     }
 
     @Override

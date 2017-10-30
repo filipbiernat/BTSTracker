@@ -98,8 +98,7 @@ public class Bts {
         String dd = convertTimeDelta(d, "d");
         String ddhh = dd + convertTimeDelta(h, "h");
         String ddhhmm = ddhh + convertTimeDelta(m, "min");
-        String ddhhmmss = ddhhmm + convertTimeDelta(s, "s");
-        timeAttached = ddhhmmss;
+        timeAttached = ddhhmm + convertTimeDelta(s, "s");
         Log.d("LOGFILIP", "timeAttached || " + timeAttached);
     }
 
@@ -201,11 +200,6 @@ public class Bts {
             return false;
         }
         Bts other = (Bts) obj;
-        if (sameLngLat(other.latLng) &&
-                networkGeneration == other.networkGeneration) {
-            return true;
-        } else {
-            return false;
-        }
+        return sameLngLat(other.latLng) && networkGeneration == other.networkGeneration;
     }
 }

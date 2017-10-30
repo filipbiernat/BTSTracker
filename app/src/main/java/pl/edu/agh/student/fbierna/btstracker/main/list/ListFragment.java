@@ -23,8 +23,6 @@ import pl.edu.agh.student.fbierna.btstracker.scan.ScanService;
 
 public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListAdapter listAdapter;
     public ListFragment() {
@@ -36,9 +34,8 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        return view;
+        return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
     @Override
@@ -46,9 +43,9 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onViewCreated(view, savedInstanceState);
 
 
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
         listAdapter = new ListAdapter(getActivity());

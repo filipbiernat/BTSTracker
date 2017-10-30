@@ -44,14 +44,12 @@ public class BtsManager {
         }
     }
 
-    private BtsTracker btsTracker;
     private BtsList list;
     private BtsSearcher btsSearcher;
 
     private Date timeOfAttach;
 
     public BtsManager(BtsTracker btsTracker){
-        this.btsTracker = btsTracker;
         list = new BtsList();
         btsSearcher = new BtsSearcher(btsTracker);
 

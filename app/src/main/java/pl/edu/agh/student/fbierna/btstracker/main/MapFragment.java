@@ -58,10 +58,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-
-        return view;
+        return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
 
@@ -120,7 +118,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             @Override
             public View getInfoContents(Marker marker) {
-                Context context = getActivity();
 
                 View view = getActivity().getLayoutInflater().inflate(R.layout.map_view_item, null);
 
