@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -73,7 +75,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapFabCenter.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
-                CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
+                CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 12);
                 mMap.animateCamera(zoom);
 
             }
@@ -84,13 +86,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        setZoomControls();
+
         try {
             mMap.setMyLocationEnabled(true);
         }
         catch (SecurityException e){
             e.printStackTrace();
         }
+
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.setPadding(0, 64, 0, 0);
 
@@ -137,9 +141,32 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             markers.add(marker);
         }
 
-        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
+        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 12);
         mMap.moveCamera(zoom);
 
 
+    }
+
+    private void setZoomControls() {
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        try {
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+            @SuppressWarnings("all")
+            View zoomControls = mapFragment.getView().findViewById(1);
+            if (zoomControls != null && zoomControls.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
+                // ZoomControl is inside of RelativeLayout
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) zoomControls.getLayoutParams();
+
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+
+                final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10,
+                        getResources().getDisplayMetrics());
+                params.setMargins(0, 0, margin, 0);
+            }
+        }
+        catch (Exception e){
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+        }
     }
 }
