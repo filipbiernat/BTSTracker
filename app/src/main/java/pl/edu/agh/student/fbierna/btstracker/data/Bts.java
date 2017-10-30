@@ -192,21 +192,17 @@ public class Bts {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
-            Log.d("LOGFILIP", "EQUALS true   this == obj");
             return true;
         }
-        if (obj == null) {
-            Log.d("LOGFILIP", "EQUALS false   obj == null");
+        if (this == null || obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
-            Log.d("LOGFILIP", "EQUALS false   getClass() != obj.getClass()");
             return false;
         }
         Bts other = (Bts) obj;
         if (sameLngLat(other.latLng) &&
                 networkGeneration == other.networkGeneration) {
-            Log.d("LOGFILIP", "EQUALS true xx ");
             return true;
         } else {
             return false;
