@@ -14,7 +14,7 @@ public class ScanService extends Service {
 
 
     final class ScanThread implements Runnable{
-        int serviceId;
+        private final int serviceId;
 
         ScanThread(int serviceId){
             this.serviceId = serviceId;

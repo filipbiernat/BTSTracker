@@ -11,13 +11,9 @@ import android.widget.Toast;
 import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.scan.ScanService;
 
-/**
- * Created by Filip on 24.10.2017.
- */
+class FloatingActionButtonOnClickListener implements View.OnClickListener {
 
-public class FloatingActionButtonOnClickListener implements View.OnClickListener {
-
-    private MainActivity mainActivity;
+    private final MainActivity mainActivity;
     private boolean serviceEnabled;
 
     public FloatingActionButtonOnClickListener(MainActivity mainActivity) {

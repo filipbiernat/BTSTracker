@@ -9,14 +9,10 @@ import java.util.List;
 
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
-/**
- * Created by Filip on 14.08.2017.
- */
+class AttachListener extends PhoneStateListener {
 
-public class AttachListener extends PhoneStateListener {
-
-    private BtsManager btsManager;
-    private TelephonyManager telephonyManager;
+    private final BtsManager btsManager;
+    private final TelephonyManager telephonyManager;
 
     public AttachListener(BtsManager btsManager, TelephonyManager telephonyManager) {
         this.btsManager = btsManager;

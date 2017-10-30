@@ -7,17 +7,13 @@ import android.widget.TextView;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
 
-/**
- * Created by Filip on 03.09.2017.
- */
-
 public class ViewHolder  extends RecyclerView.ViewHolder{
-    public Button networkButton;
-    public TextView textViewTown;
-    public TextView textViewLocation;
-    public TextView textViewOperatorName;//todo rename
-    public TextView textViewRegion;
-    public TextView textViewTimeAttached;
+    private final Button networkButton;
+    public final TextView textViewTown;
+    public final TextView textViewLocation;
+    public final TextView textViewOperatorName;//todo rename
+    // --Commented out by Inspection (30.10.2017 19:56):public TextView textViewRegion;
+    public final TextView textViewTimeAttached;
     //public TextView textViewNetworkType;
     public ViewHolder(View v) {
         super(v);

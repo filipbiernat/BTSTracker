@@ -1,24 +1,19 @@
 package pl.edu.agh.student.fbierna.btstracker.main.list;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
-import pl.edu.agh.student.fbierna.btstracker.scan.ScanService;
 
 
 public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{

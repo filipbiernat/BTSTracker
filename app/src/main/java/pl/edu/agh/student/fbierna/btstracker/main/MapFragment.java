@@ -1,29 +1,19 @@
 package pl.edu.agh.student.fbierna.btstracker.main;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -33,12 +23,9 @@ import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
-import static pl.edu.agh.student.fbierna.btstracker.R.drawable.marker;
-import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_center;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_refresh;
-import static pl.edu.agh.student.fbierna.btstracker.R.id.textViewLocation;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -46,7 +33,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
 
     private BtsManager btsManager;
-    private ArrayList<Marker> markers;
+    private final ArrayList<Marker> markers;
 
     public MapFragment() {
         markers = new ArrayList<>();
@@ -160,11 +147,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    private void hideInfoWindows(){
-        for (Marker marker : markers){
-            marker.hideInfoWindow();
-        }
-    }
+// --Commented out by Inspection START (30.10.2017 19:56):
+//    private void hideInfoWindows(){
+//        for (Marker marker : markers){
+//            marker.hideInfoWindow();
+//        }
+//    }
+// --Commented out by Inspection STOP (30.10.2017 19:56)
 
     private void showInfoWindows(){
         for (Marker marker : markers){

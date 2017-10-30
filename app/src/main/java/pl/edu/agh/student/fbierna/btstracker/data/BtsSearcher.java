@@ -1,6 +1,5 @@
 package pl.edu.agh.student.fbierna.btstracker.data;
 
-import android.content.res.AssetManager;
 import android.telephony.CellIdentityGsm;
 import android.telephony.CellIdentityLte;
 import android.telephony.CellIdentityWcdma;
@@ -15,15 +14,9 @@ import java.io.InputStreamReader;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 
+class BtsSearcher {
 
-/**
- * Created by Filip on 27.08.2017.
- */
-
-
-public class BtsSearcher {
-
-    private BtsTracker btsTracker;
+    private final BtsTracker btsTracker;
     private BufferedReader reader = null;
     private static final String BTS_DATA_PATH = "btsData.csv";
     private static final String CSV_SPLIT_BY = ";";
@@ -32,17 +25,17 @@ public class BtsSearcher {
     private static final int NETWORK_GENERATION_3G = 3;
     private static final int NETWORK_GENERATION_4G = 4;
 
-    int mcc;
-    int lac;
-    int id;
-    int networkGeneration;
+    private int mcc;
+    private int lac;
+    private int id;
+    private int networkGeneration;
 
 
     public BtsSearcher(BtsTracker btsTracker) {
         this.btsTracker = btsTracker;
     }
 
-    public Bts search(CellInfo cellInfo, String operatorName, int networkType){
+    public Bts search(CellInfo cellInfo, String operatorName){
         processCellInfo(cellInfo);
         String csvQuery = getCsvQuery();
         String csvBtsData = scanCsv(csvQuery);

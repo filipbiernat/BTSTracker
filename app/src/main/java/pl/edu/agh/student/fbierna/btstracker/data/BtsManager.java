@@ -1,26 +1,16 @@
 package pl.edu.agh.student.fbierna.btstracker.data;
 
-import android.content.res.AssetManager;
 import android.telephony.CellInfo;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
-
-import static android.R.id.list;
-
-/**
- * Created by Filip on 10.09.2017.
- */
 
 
 public class BtsManager {
@@ -30,7 +20,7 @@ public class BtsManager {
             super();
         }
 
-        protected Boolean addBts(Bts bts){
+        Boolean addBts(Bts bts){
             if (list.contains(bts)){
                 Bts existingBts = get(indexOf(bts));
                 Bts existingBtsCopy = new Bts(existingBts);
@@ -44,8 +34,8 @@ public class BtsManager {
         }
     }
 
-    private BtsList list;
-    private BtsSearcher btsSearcher;
+    private final BtsList list;
+    private final BtsSearcher btsSearcher;
 
     private Date timeOfAttach;
 
@@ -57,7 +47,7 @@ public class BtsManager {
     }
 
     public void switchToCell(CellInfo cellInfo, String operatorName, int networkType){
-        Bts newBts = btsSearcher.search(cellInfo, operatorName, networkType);
+        Bts newBts = btsSearcher.search(cellInfo, operatorName);
 
         detachPresentBts();
 

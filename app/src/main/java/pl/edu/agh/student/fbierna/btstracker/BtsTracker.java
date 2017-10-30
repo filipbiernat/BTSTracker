@@ -5,12 +5,8 @@ import android.content.res.Configuration;
 
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
-/**
- * Created by Filip on 15.08.2017.
- */
-
 public class BtsTracker extends Application {
-    private BtsManager btsManager = new BtsManager(this);
+    private final BtsManager btsManager = new BtsManager(this);
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

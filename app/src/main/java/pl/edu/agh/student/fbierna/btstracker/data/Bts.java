@@ -1,7 +1,6 @@
 package pl.edu.agh.student.fbierna.btstracker.data;
 
 import android.location.Location;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -11,22 +10,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import static android.R.attr.data;
-import static android.R.attr.rotation;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
 /**
  * Created by Filip on 10.09.2017.
  */
 
 public class Bts {
-    private int networkGeneration;
-    private String region;
-    private String town;
-    private String location;
-    private String operatorName;
-    private String networkType;
-    private LatLng latLng;
+    private final int networkGeneration;
+    private final String region;
+    private final String town;
+    private final String location;
+    private final String operatorName;
+    private final String networkType;
+    private final LatLng latLng;
     private long timeAttachedLong;
     private String timeAttached;
     private int rotation = 0;
@@ -112,7 +107,7 @@ public class Bts {
     private String convertTimeDelta(long timeDelta, String unit){
         String res = "";
         if (timeDelta > 0){
-            res = Long.toString(timeDelta) + unit + ("s" != unit ? " " : "");
+            res = Long.toString(timeDelta) + unit + (unit.equals("s")  ? "" : " ");
         }
         return res;
     }
@@ -193,7 +188,7 @@ public class Bts {
         if (this == obj) {
             return true;
         }
-        if (this == null || obj == null) {
+        if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
