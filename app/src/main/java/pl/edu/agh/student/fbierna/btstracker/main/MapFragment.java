@@ -37,7 +37,6 @@ import static pl.edu.agh.student.fbierna.btstracker.R.drawable.marker;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_center;
-import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_info;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_refresh;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.textViewLocation;
 
@@ -84,24 +83,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 mMap.clear();
                 onMapReady(mMap);
 
-            }
-        });
-
-        FloatingActionButton mapFabInfo = (FloatingActionButton) getActivity().findViewById(map_fab_info);
-        mapFabInfo.setOnClickListener(new View.OnClickListener(){
-            private Boolean hidden = false;
-            @Override
-            public void onClick(View view) {
-                if (hidden){
-                    showInfoWindows();
-                } else {
-                    hideInfoWindows();
-                }
-                FloatingActionButton floatingActionButton = (FloatingActionButton) view;
-                int id = hidden ? R.drawable.map_info_enabled : R.drawable.map_info_disabled;
-                Drawable drawable = getActivity().getResources().getDrawable(id, getActivity().getTheme());
-                floatingActionButton.setImageDrawable(drawable);
-                hidden = !hidden;
             }
         });
 
