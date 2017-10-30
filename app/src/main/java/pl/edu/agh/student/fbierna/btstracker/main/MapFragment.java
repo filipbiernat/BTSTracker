@@ -101,8 +101,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.getUiSettings().setZoomControlsEnabled(false);
-        //mMap.setMyLocationEnabled(true); FIXME FB enable
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        try {
+            mMap.setMyLocationEnabled(true);
+        }
+        catch (SecurityException e){
+            e.printStackTrace();
+        }
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.setPadding(0, 64, 0, 0);
 
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
@@ -167,5 +174,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             marker.showInfoWindow();
         }
     }
-
 }
