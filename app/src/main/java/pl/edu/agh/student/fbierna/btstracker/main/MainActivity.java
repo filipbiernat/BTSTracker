@@ -1,6 +1,9 @@
 package pl.edu.agh.student.fbierna.btstracker.main;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,10 +20,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
+import pl.edu.agh.student.fbierna.btstracker.scan.ScanService;
+
+import static android.R.attr.fragment;
+import static android.R.attr.id;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FloatingActionButtonOnClickListener fabListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +50,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Fragment fragment = new ListFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content_frame, fragment);
+        fragmentTransaction.replace(R.id.content_frame, new ListFragment());
         fragmentTransaction.commit();
 
         checkPermissions();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new FloatingActionButtonOnClickListener(this));
+        fabListener = new FloatingActionButtonOnClickListener(this);
+        fab.setOnClickListener(fabListener);
     }
 
 
@@ -74,8 +84,11 @@ public class MainActivity extends AppCompatActivity
             fragment = new HomeFragment();
         } else if (id == R.id.nav_list) {
             fragment = new ListFragment();
+
         } else if (id == R.id.nav_map) {
             fragment = new MapFragment();
+        } else if (id == R.id.nav_reset) {
+            reset();
         }
 
         if (fragment != null) {
@@ -137,5 +150,31 @@ public class MainActivity extends AppCompatActivity
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    private void reset(){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    BtsTracker btsTracker = (BtsTracker) getApplication();
+                    btsTracker.getBtsManager().reset();
+
+                    fabListener.switchState(MainActivity.this).switchState(MainActivity.this);
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, new HomeFragment());
+                    fragmentTransaction.commit();
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("You are going to discard all your data. Are you sure?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+                .setIcon(R.drawable.ic_menu_reset)
+                .setTitle("Reset")
+                .show();
     }
 }

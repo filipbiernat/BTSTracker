@@ -14,12 +14,6 @@ public class ScanService extends Service {
 
 
     final class ScanThread implements Runnable{
-        private final int serviceId;
-
-        ScanThread(int serviceId){
-            this.serviceId = serviceId;
-        }
-
         @Override
         public void run() {
             TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -45,7 +39,7 @@ public class ScanService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        scanThread = new Thread(new ScanThread(startId));
+        scanThread = new Thread(new ScanThread());
         scanThread.start();
         return START_STICKY;
     }

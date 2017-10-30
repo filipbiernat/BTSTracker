@@ -21,27 +21,31 @@ public class BtsManager {
         }
 
         Boolean addBts(Bts bts){
-            if (list.contains(bts)){
+            if (btsList.contains(bts)){
                 Bts existingBts = get(indexOf(bts));
                 Bts existingBtsCopy = new Bts(existingBts);
                 remove(existingBts);
                 add(existingBtsCopy);
                 return false;
             } else {
-                list.add(bts);
+                btsList.add(bts);
                 return true;
             }
         }
     }
 
-    private final BtsList list;
+    private final BtsList btsList;
     private final BtsSearcher btsSearcher;
 
     private Date timeOfAttach;
 
     public BtsManager(BtsTracker btsTracker){
-        list = new BtsList();
+        btsList = new BtsList();
         btsSearcher = new BtsSearcher(btsTracker);
+    }
+
+    public void reset(){
+        btsList.clear();
     }
 
     public void switchToCell(CellInfo cellInfo, String operatorName, int networkType){
@@ -49,11 +53,12 @@ public class BtsManager {
 
         detachPresentBts();
 
-        boolean isAlreadyAdded = list.addBts(newBts);
+        boolean isAlreadyAdded = btsList.addBts(newBts);
 
         if (isAlreadyAdded) {
-            for (Bts bts : list) {
-                if (!bts.equals(list.getLast()) &&
+            for (Bts bts : btsList) {
+                if (btsList.getLast() != null &&
+                        !bts.equals(btsList.getLast()) &&
                         newBts.sameLngLat(bts.getLatLng()) &&
                         bts.getRotation() == 0) {
                     bts.setRotation(30);
@@ -65,9 +70,9 @@ public class BtsManager {
 
     private void detachPresentBts(){
         Date currentTime = Calendar.getInstance().getTime();
-        if (list.size() > 0)
+        if (btsList.size() > 0)
         {
-            Bts presentBts = list.getLast();
+            Bts presentBts = btsList.getLast();
             if (null != presentBts){
                 presentBts.detach(timeOfAttach, currentTime);
             }
@@ -77,16 +82,16 @@ public class BtsManager {
 
     public Bts get(int position) {
         int inversedPosition = size() - 1 - position;
-        return list.get(inversedPosition);
+        return btsList.get(inversedPosition);
     }
 
     public int size() {
-        return list.size();
+        return btsList.size();
     }
 
     public ArrayList<MarkerOptions> getMarkerOptions(){
         ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
-        for (Bts bts : list) {
+        for (Bts bts : btsList) {
             MarkerOptions options = bts.getMarkerOptions();
             if (options.getPosition() != null) {
                 markerOptions.add(options);
