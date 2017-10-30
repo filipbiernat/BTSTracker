@@ -36,12 +36,12 @@ public class Bts {
 
         String[] data = csvData.split(CSV_SPLIT_BY);
 
-        town = data[6];
-        location = data[7];
-        double lat = Double.parseDouble(data[8]);
-        double lng = Double.parseDouble(data[9]);
+        town = data[5];
+        location = data[6];
+        double lat = Double.parseDouble(data[7]);
+        double lng = Double.parseDouble(data[8]);
         latLng = new LatLng(lat, lng);
-    }//todo remove region + connect operator + network
+    }
 
     public Bts(Bts other) {
         if (null != other) {

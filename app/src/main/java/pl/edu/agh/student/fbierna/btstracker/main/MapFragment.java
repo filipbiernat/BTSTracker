@@ -49,14 +49,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(map);
         mapFragment.getMapAsync(this);
-
 
         BtsTracker btsTracker = (BtsTracker) getActivity().getApplicationContext();
         btsManager = btsTracker.getBtsManager();
@@ -135,10 +133,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         ArrayList<MarkerOptions> markerOptionsList = btsManager.getMarkerOptions();
         for (MarkerOptions markerOptions : markerOptionsList){
             Marker marker = mMap.addMarker(markerOptions);
+            marker.showInfoWindow();
             markers.add(marker);
         }
 
         CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 11);
         mMap.moveCamera(zoom);
+
+
     }
 }
