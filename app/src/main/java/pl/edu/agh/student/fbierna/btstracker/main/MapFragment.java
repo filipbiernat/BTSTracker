@@ -96,7 +96,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        mMap.setPadding(0, 64, 0, 0);
+        mMap.setPadding(96, 0, 0, 0);
 
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
@@ -162,7 +162,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10,
                         getResources().getDisplayMetrics());
-                params.setMargins(0, 0, margin, 0);
+                params.setMargins(margin, margin, margin, margin);
             }
         }
         catch (Exception e){
