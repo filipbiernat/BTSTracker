@@ -1,15 +1,19 @@
 package pl.edu.agh.student.fbierna.btstracker.main;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,12 +23,22 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
+import static android.R.attr.data;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_center;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.map_fab_refresh;
@@ -133,12 +147,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        markers.clear();
-        ArrayList<MarkerOptions> markerOptionsList = btsManager.getMarkerOptions();
-        for (MarkerOptions markerOptions : markerOptionsList){
-            Marker marker = mMap.addMarker(markerOptions);
-            marker.showInfoWindow();
-            markers.add(marker);
+        try {
+            markers.clear();
+            ArrayList<MarkerOptions> markerOptionsList = btsManager.getMarkerOptions();
+            for (MarkerOptions markerOptions : markerOptionsList){
+                Marker marker = mMap.addMarker(markerOptions);
+                marker.showInfoWindow();
+                markers.add(marker);
+            }
+        } catch (Exception e) {
+            Toast.makeText(getActivity().getApplicationContext(), "ERROR! Check stackTrace.txt",
+                    Toast.LENGTH_LONG).show();
+            Writer writer = new StringWriter();
+            e.printStackTrace(new PrintWriter(writer));
+            String stackTrace = writer.toString() + "\n\n";
+            writeToFile(getActivity(), "stackTrace.txt", stackTrace);
         }
 
         CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(btsManager.getTopBtsLatLng(), 12);
@@ -167,6 +190,34 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         catch (Exception e){
             mMap.getUiSettings().setZoomControlsEnabled(false);
+        }
+    }
+
+    public void writeToFile(Context context, String fileName, String data) {
+
+        Writer writer;
+
+        String filepath = Environment.getExternalStorageDirectory().getPath() + File.separator + "BTS_Tracker";
+        File dir = new File(filepath);
+
+        if (!dir.isDirectory()) {
+            dir.mkdir();
+        }
+
+        try {
+            if (!dir.isDirectory()) {
+                throw new IOException(
+                        "Unable to access directory " + filepath);
+            }
+            File outputFile = new File(dir, fileName);
+            final Boolean appendText = true;
+            writer = new BufferedWriter(new FileWriter(outputFile, appendText));
+            writer.write(data); // DATA WRITE TO FILE
+            Toast.makeText(context.getApplicationContext(),
+                    "Successfully saved to: " + outputFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            writer.close();
+        } catch (IOException e) {
+            Toast.makeText(context, e.getMessage() + " Unable to access the storage.", Toast.LENGTH_LONG).show();
         }
     }
 }
