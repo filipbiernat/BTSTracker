@@ -3,6 +3,7 @@ package pl.edu.agh.student.fbierna.btstracker.main;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -84,9 +85,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            fragment = new HomeFragment();
-        } else if (id == R.id.nav_list) {
+        if (id == R.id.nav_list) {
             fragment = new ListFragment();
         } else if (id == R.id.nav_map) {
             fragment = new MapFragment();
@@ -163,7 +162,7 @@ public class MainActivity extends AppCompatActivity
         builder.setMessage("Please choose filename:")
                 .setPositiveButton("OK", dialogClickListener)
                 .setNegativeButton("Cancel", dialogClickListener)
-                .setIcon(R.drawable.ic_menu_save)
+                .setIcon(toCsv ? R.drawable.ic_menu_open : R.drawable.ic_menu_export)
                 .setTitle("Save")
                 .show();
 
@@ -193,7 +192,7 @@ public class MainActivity extends AppCompatActivity
         };
         builder.setAdapter(arrayAdapter, dialogClickListener)
                 .setNegativeButton("Cancel", dialogClickListener)
-                .setIcon(R.drawable.ic_menu_save)//todo change icon
+                .setIcon(R.drawable.ic_menu_open)
                 .setTitle("Open file")
                 .show();
     }
@@ -213,10 +212,15 @@ public class MainActivity extends AppCompatActivity
                     btsTracker.getBtsManager().reset();
 
                     fabListener.switchState(MainActivity.this).switchState(MainActivity.this);
-
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.content_frame, new HomeFragment());
-                    fragmentTransaction.commit();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.content_frame, new ListFragment());
+                            fragmentTransaction.commit();
+                        }
+                    }, 2000);
                 }
             }
         };
