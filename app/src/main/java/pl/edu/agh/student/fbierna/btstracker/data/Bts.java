@@ -10,6 +10,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import static android.R.attr.description;
+import static android.R.attr.name;
+
 public class Bts {
     private final int networkGeneration;
     private final String town;
@@ -28,7 +31,7 @@ public class Bts {
         this.networkType = parseNetworkType(networkGeneration);
         this.networkGeneration = networkGeneration;
         timeAttachedLong = 0;
-        timeAttached = "Obecnie";
+        timeAttached = "Now";
 
         String[] data = csvData.split(CSV_SPLIT_BY);
 
@@ -150,7 +153,23 @@ public class Bts {
                 CSV_SPLIT_BY + latLngString +
                 CSV_SPLIT_BY + String.valueOf(timeAttachedLong) +
                 CSV_SPLIT_BY + timeAttached +
-                CSV_SPLIT_BY + String.valueOf(rotation);
+                CSV_SPLIT_BY + String.valueOf(rotation) + "\n";
+    }
+
+    public String getKmlString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("      <Placemark>\n");
+        stringBuilder.append("        <name>" + String.valueOf(networkGeneration) + "G: " + town + "</name>\n");
+        stringBuilder.append("        <description><![CDATA[" + location + "<br>");
+        stringBuilder.append(getOperatorAndNetwork() + "<br>");
+        stringBuilder.append("Attached: " + timeAttached + "]]></description>\n");
+        stringBuilder.append("        <styleUrl>#bts" + String.valueOf(networkGeneration) + "G</styleUrl>\n");
+        stringBuilder.append("        <Point>\n");
+        stringBuilder.append("          <coordinates>" + String.valueOf(latLng.longitude) + "," +
+                        String.valueOf(latLng.latitude) + ",0</coordinates>\n");
+        stringBuilder.append("        </Point>\n");
+        stringBuilder.append("      </Placemark>\n");
+        return stringBuilder.toString();
     }
 
     private String handleNullString(String string){

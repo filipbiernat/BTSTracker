@@ -90,10 +90,12 @@ public class MainActivity extends AppCompatActivity
             fragment = new ListFragment();
         } else if (id == R.id.nav_map) {
             fragment = new MapFragment();
-        } else if (id == R.id.nav_save) {
-            save();
         } else if (id == R.id.nav_open) {
             open();
+        } else if (id == R.id.nav_save) {
+            save();
+        } else if (id == R.id.nav_export) {
+            export();
         } else if (id == R.id.nav_reset) {
             reset();
         }
@@ -119,6 +121,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void save(){
+        final Boolean toCsv = true;
+        store(toCsv);
+    }
+
+    private void export(){
+        final Boolean toCsv = false;
+        store(toCsv);
+    }
+
+    private void store(final Boolean toCsv){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         final EditText input = new EditText(this);
@@ -130,11 +142,16 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_POSITIVE) {
                     String filename = input.getText().toString();
-                    if (filename.length() >0 ){
-                        filename += ".btst";
+                    if (filename.length() > 0){
                         BtsTracker btsTracker = (BtsTracker) getApplication();
-                        fileManager.exportToFile(MainActivity.this, btsTracker.getBtsManager().getList(),
-                                filename);
+                        filename += toCsv ? ".btst" : ".kml";
+                        if (toCsv) {
+                            fileManager.saveToBtstFile(MainActivity.this, btsTracker.getBtsManager().getList(),
+                                    filename);
+                        } else {
+                            fileManager.saveToKmlFile(MainActivity.this, btsTracker.getBtsManager().getList(),
+                                    filename);
+                        }
                     } else {
                         Toast.makeText(MainActivity.this, "Incorrect filename. Try again.",
                                 Toast.LENGTH_LONG).show();
@@ -170,7 +187,7 @@ public class MainActivity extends AppCompatActivity
                 if (which != DialogInterface.BUTTON_NEGATIVE) {
                     String filename = arrayAdapter.getItem(which);
                     BtsTracker btsTracker = (BtsTracker) getApplication();
-                    fileManager.importFromFile(filename, btsTracker.getBtsManager().getList());
+                    fileManager.openFromBtstFile(filename, btsTracker.getBtsManager().getList());
                 }
             }
         };

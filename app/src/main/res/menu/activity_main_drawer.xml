@@ -24,13 +24,17 @@
             android:icon="@drawable/ic_menu_tutorial"
             android:title="Tutorial" />
         <item
+            android:id="@+id/nav_open"
+            android:icon="@drawable/ic_menu_open"
+            android:title="Open" />
+        <item
             android:id="@+id/nav_save"
             android:icon="@drawable/ic_menu_save"
             android:title="Save" />
         <item
-            android:id="@+id/nav_open"
-            android:icon="@drawable/ic_menu_open"
-            android:title="Open" />
+            android:id="@+id/nav_export"
+            android:icon="@drawable/ic_menu_export"
+            android:title="Export" />
         <item
             android:id="@+id/nav_reset"
             android:icon="@drawable/ic_menu_reset"

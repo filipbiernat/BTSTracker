@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import pl.edu.agh.student.fbierna.btstracker.data.Bts;
 import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
+import static android.R.attr.name;
 import static android.R.attr.path;
 
 /**
@@ -28,21 +29,34 @@ import static android.R.attr.path;
  */
 
 public class FileManager {
-    public static final String DIR_NAME = "BTS_Tracker";
+    private static final String DIR_NAME = "BTS_Tracker";
 
-    public void exportToFile(Context context, LinkedList<Bts> btsList, String filename){
+    public void saveToBtstFile(Context context, LinkedList<Bts> btsList, String filename){
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Bts bts : btsList) {
             stringBuilder.append(bts.getCsvString());
-            stringBuilder.append("\n");
         }
 
         writeToFile(context, filename, stringBuilder.toString());
     }
 
+    public void saveToKmlFile(Context context, LinkedList<Bts> btsList, String filename){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(KML_PREFIX);
+        stringBuilder.append("      <name>" + DIR_NAME + " " + filename + "</name>\n");
+
+        for (Bts bts : btsList) {
+            stringBuilder.append(bts.getKmlString());
+        }
+
+        stringBuilder.append(KML_SUFFIX);
+        writeToFile(context, filename, stringBuilder.toString());
+    }
+
     public ArrayAdapter<String> getBtstPaths(Activity activity){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(activity, android.R.layout.select_dialog_singlechoice);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(activity,
+                android.R.layout.select_dialog_singlechoice);
 
         File dir = new File(getDirPath());
         File[] files = dir.listFiles();
@@ -57,7 +71,7 @@ public class FileManager {
     }
 
 
-    public void importFromFile(String filename, LinkedList<Bts> btsList) {
+    public void openFromBtstFile(String filename, LinkedList<Bts> btsList) {
         File file = new File(getDirPath()+ File.separator + filename);
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -106,5 +120,43 @@ public class FileManager {
         }
     }
 
+    private static final String KML_PREFIX =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n" +
+            "  <Document>\n" +
+            "    <name/>\n" +
+            "    <description/>\n" +
+            "    <Style id=\"bts2G\">\n" +
+            "      <IconStyle>\n" +
+            "        <color>ff8140ff</color>\n" +
+            "        <Icon>\n" +
+            "          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>\n" +
+            "        </Icon>\n" +
+            "        <hotSpot x=\"16\" xunits=\"pixels\" y=\"32\" yunits=\"insetPixels\"/>\n" +
+            "      </IconStyle>\n" +
+            "    </Style>\n" +
+            "    <Style id=\"bts3G\">\n" +
+            "      <IconStyle>\n" +
+            "        <color>ffb5513f</color>\n" +
+            "        <Icon>\n" +
+            "          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>\n" +
+            "        </Icon>\n" +
+            "        <hotSpot x=\"16\" xunits=\"pixels\" y=\"32\" yunits=\"insetPixels\"/>\n" +
+            "      </IconStyle>\n" +
+            "    </Style>\n" +
+            "	<Style id=\"bts4G\">\n" +
+            "      <IconStyle>\n" +
+            "        <color>ff3643f4</color>\n" +
+            "        <Icon>\n" +
+            "          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>\n" +
+            "        </Icon>\n" +
+            "        <hotSpot x=\"16\" xunits=\"pixels\" y=\"32\" yunits=\"insetPixels\"/>\n" +
+            "      </IconStyle>\n" +
+            "    </Style>\n" +
+            "    <Folder>\n";
 
+    private static final String KML_SUFFIX =
+            "    </Folder>\n" +
+            "  </Document>\n" +
+            "</kml>\n";
 }
