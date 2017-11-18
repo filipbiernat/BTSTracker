@@ -28,6 +28,10 @@
             android:icon="@drawable/ic_menu_save"
             android:title="Save" />
         <item
+            android:id="@+id/nav_open"
+            android:icon="@drawable/ic_menu_open"
+            android:title="Open" />
+        <item
             android:id="@+id/nav_reset"
             android:icon="@drawable/ic_menu_reset"
             android:title="Reset" />

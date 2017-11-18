@@ -86,7 +86,7 @@ class BtsSearcher {
         return mcc + ";" + networkGeneration + ";" + lac + ";" + btsId;
     }
 
-    private String scanCsv(String query){
+    private String scanCsv(String query){ //todo maybe use file manager
         String line = null;
         try {
             InputStreamReader inputStreamReader =

@@ -15,14 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
-
-import static android.R.id.input;
-import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,6 +92,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new MapFragment();
         } else if (id == R.id.nav_save) {
             save();
+        } else if (id == R.id.nav_open) {
+            open();
         } else if (id == R.id.nav_reset) {
             reset();
         }
@@ -153,7 +153,39 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void open(){
+        promptReset("Open");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        final ArrayAdapter<String> arrayAdapter = fileManager.getBtstPaths(this);
+        if (arrayAdapter.isEmpty()){
+            Toast.makeText(MainActivity.this, "No *.btst file found at " + fileManager.getDirPath(),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which != DialogInterface.BUTTON_NEGATIVE) {
+                    String filename = arrayAdapter.getItem(which);
+                    BtsTracker btsTracker = (BtsTracker) getApplication();
+                    fileManager.importFromFile(filename, btsTracker.getBtsManager().getList());
+                }
+            }
+        };
+        builder.setAdapter(arrayAdapter, dialogClickListener)
+                .setNegativeButton("Cancel", dialogClickListener)
+                .setIcon(R.drawable.ic_menu_save)//todo change icon
+                .setTitle("Open file")
+                .show();
+    }
+
     private void reset(){
+        promptReset("Reset");
+    }
+
+    private void promptReset(String title){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -176,7 +208,7 @@ public class MainActivity extends AppCompatActivity
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener)
                 .setIcon(R.drawable.ic_menu_reset)
-                .setTitle("Reset")
+                .setTitle(title)
                 .show();
     }
 }
