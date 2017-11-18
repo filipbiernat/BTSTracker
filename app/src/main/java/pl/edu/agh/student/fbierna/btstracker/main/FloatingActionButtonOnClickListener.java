@@ -18,36 +18,40 @@ class FloatingActionButtonOnClickListener implements View.OnClickListener {
     public FloatingActionButtonOnClickListener(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         serviceEnabled = false;
-        switchState(mainActivity);
+        switchState(mainActivity, true);
     }
 
     @Override
     public void onClick(View view) {
         Context context = view.getContext();
-        switchState(context);
+        switchState(context, true);
         switchDrawable(view, context);
     }
 
-    protected FloatingActionButtonOnClickListener switchState(Context context){
+    protected FloatingActionButtonOnClickListener switchState(Context context, Boolean enableToast){
         if (serviceEnabled) {
-            stopService(context);
+            stopService(context, enableToast);
         } else {
-            startService(context);
+            startService(context, enableToast);
         }
         serviceEnabled = !serviceEnabled;
         return this;
     }
 
-    private void startService(Context context) {
+    private void startService(Context context, Boolean enableToast) {
         Intent intent = new Intent(context, ScanService.class);
         mainActivity.startService(intent);
-        Toast.makeText(context, "Scanning enabled", Toast.LENGTH_SHORT).show();
+        if (enableToast){
+            Toast.makeText(context, "Scanning enabled", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void stopService(Context context) {
+    private void stopService(Context context, Boolean enableToast) {
         Intent intent = new Intent(context, ScanService.class);
         mainActivity.stopService(intent);
-        Toast.makeText(context, "Scanning disabled", Toast.LENGTH_SHORT).show();
+        if (enableToast) {
+            Toast.makeText(context, "Scanning disabled", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void switchDrawable(View view, Context context){

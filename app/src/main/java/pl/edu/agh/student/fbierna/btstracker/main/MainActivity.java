@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
 
     private FloatingActionButtonOnClickListener fabListener;
     private PermissionsManager permissionsManager;
-    private FileManager fileManager;
+    private TaskManager taskManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.content_frame, new ListFragment());
         fragmentTransaction.commit();
 
-        fileManager = new FileManager();
+        taskManager = new TaskManager(this);
         permissionsManager = new PermissionsManager(this);
         Boolean permissionsGranted = permissionsManager.hasPermissions();
         finalizeOnCreate(permissionsGranted);
@@ -90,13 +90,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_map) {
             fragment = new MapFragment();
         } else if (id == R.id.nav_open) {
-            open();
+            taskManager.open();
         } else if (id == R.id.nav_save) {
-            save();
+            taskManager.save();
         } else if (id == R.id.nav_export) {
-            export();
+            taskManager.export();
         } else if (id == R.id.nav_reset) {
-            reset();
+            taskManager.reset();
         }
 
         if (fragment != null) {
@@ -119,117 +119,8 @@ public class MainActivity extends AppCompatActivity
         finalizeOnCreate(permissionsGranted);
     }
 
-    private void save(){
-        final Boolean toCsv = true;
-        store(toCsv);
-    }
-
-    private void export(){
-        final Boolean toCsv = false;
-        store(toCsv);
-    }
-
-    private void store(final Boolean toCsv){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_POSITIVE) {
-                    String filename = input.getText().toString();
-                    if (filename.length() > 0){
-                        BtsTracker btsTracker = (BtsTracker) getApplication();
-                        filename += toCsv ? ".btst" : ".kml";
-                        if (toCsv) {
-                            fileManager.saveToBtstFile(MainActivity.this, btsTracker.getBtsManager().getList(),
-                                    filename);
-                        } else {
-                            fileManager.saveToKmlFile(MainActivity.this, btsTracker.getBtsManager().getList(),
-                                    filename);
-                        }
-                    } else {
-                        Toast.makeText(MainActivity.this, "Incorrect filename. Try again.",
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        };
-
-        builder.setMessage("Please choose filename:")
-                .setPositiveButton("OK", dialogClickListener)
-                .setNegativeButton("Cancel", dialogClickListener)
-                .setIcon(toCsv ? R.drawable.ic_menu_open : R.drawable.ic_menu_export)
-                .setTitle("Save")
-                .show();
-
-
-    }
-
-    private void open(){
-        promptReset("Open");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        final ArrayAdapter<String> arrayAdapter = fileManager.getBtstPaths(this);
-        if (arrayAdapter.isEmpty()){
-            Toast.makeText(MainActivity.this, "No *.btst file found at " + fileManager.getDirPath(),
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which != DialogInterface.BUTTON_NEGATIVE) {
-                    String filename = arrayAdapter.getItem(which);
-                    BtsTracker btsTracker = (BtsTracker) getApplication();
-                    fileManager.openFromBtstFile(filename, btsTracker.getBtsManager().getList());
-                }
-            }
-        };
-        builder.setAdapter(arrayAdapter, dialogClickListener)
-                .setNegativeButton("Cancel", dialogClickListener)
-                .setIcon(R.drawable.ic_menu_open)
-                .setTitle("Open file")
-                .show();
-    }
-
-    private void reset(){
-        promptReset("Reset");
-    }
-
-    private void promptReset(String title){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_POSITIVE) {
-                    BtsTracker btsTracker = (BtsTracker) getApplication();
-                    btsTracker.getBtsManager().reset();
-
-                    fabListener.switchState(MainActivity.this).switchState(MainActivity.this);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.content_frame, new ListFragment());
-                            fragmentTransaction.commit();
-                        }
-                    }, 2000);
-                }
-            }
-        };
-
-        builder.setMessage("You are going to discard all your data. Are you sure?")
-                .setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener)
-                .setIcon(R.drawable.ic_menu_reset)
-                .setTitle(title)
-                .show();
+    public void doubleSwitchFabState(TaskManager.AccessToken token){
+        token.hashCode();
+        fabListener.switchState(this, false).switchState(this, false);
     }
 }
