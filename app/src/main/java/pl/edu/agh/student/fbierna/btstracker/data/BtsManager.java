@@ -103,4 +103,8 @@ public class BtsManager {
     public LatLng getTopBtsLatLng(){
         return get(0).getLatLng();
     }
+
+    public LinkedList<Bts> getList() {
+        return btsList;
+    }
 }

@@ -10,10 +10,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Filip on 10.09.2017.
- */
-
 public class Bts {
     private final int networkGeneration;
     private final String town;
@@ -41,6 +37,22 @@ public class Bts {
         double lat = Double.parseDouble(data[7]);
         double lng = Double.parseDouble(data[8]);
         latLng = new LatLng(lat, lng);
+    }
+
+    public Bts(String outFileCsvString){
+        String[] data = outFileCsvString.split(CSV_SPLIT_BY);
+
+        networkGeneration = Integer.valueOf(data[0]);
+        town = data[1];
+        location = data[2];
+        operatorName = data[3];
+        networkType = data[4];
+        double lat = Double.parseDouble(data[5]);
+        double lng = Double.parseDouble(data[6]);
+        latLng = new LatLng(lat, lng);
+        timeAttachedLong =  Long.valueOf(data[7]);
+        timeAttached = data[8];
+        rotation = Integer.valueOf(data[9]);
     }
 
     public Bts(Bts other) {
@@ -128,7 +140,18 @@ public class Bts {
                 .rotation(rotation);
     }
 
-
+    public String getCsvString(){
+        String latLngString = String.valueOf(latLng.latitude) + CSV_SPLIT_BY + String.valueOf(latLng.longitude);
+        return String.valueOf(networkGeneration) +
+                CSV_SPLIT_BY + town +
+                CSV_SPLIT_BY + location +
+                CSV_SPLIT_BY + operatorName +
+                CSV_SPLIT_BY + networkType +
+                CSV_SPLIT_BY + latLngString +
+                CSV_SPLIT_BY + String.valueOf(timeAttachedLong) +
+                CSV_SPLIT_BY + timeAttached +
+                CSV_SPLIT_BY + String.valueOf(rotation);
+    }
 
     private String handleNullString(String string){
         return null == string ? "–" : string;

@@ -13,11 +13,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
 
+import static android.R.id.input;
 import static pl.edu.agh.student.fbierna.btstracker.R.id.fab;
 
 public class MainActivity extends AppCompatActivity
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity
 
     private FloatingActionButtonOnClickListener fabListener;
     private PermissionsManager permissionsManager;
+    private FileManager fileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.content_frame, new ListFragment());
         fragmentTransaction.commit();
 
+        fileManager = new FileManager();
         permissionsManager = new PermissionsManager(this);
         Boolean permissionsGranted = permissionsManager.hasPermissions();
         finalizeOnCreate(permissionsGranted);
@@ -84,9 +90,10 @@ public class MainActivity extends AppCompatActivity
             fragment = new HomeFragment();
         } else if (id == R.id.nav_list) {
             fragment = new ListFragment();
-
         } else if (id == R.id.nav_map) {
             fragment = new MapFragment();
+        } else if (id == R.id.nav_save) {
+            save();
         } else if (id == R.id.nav_reset) {
             reset();
         }
@@ -111,7 +118,44 @@ public class MainActivity extends AppCompatActivity
         finalizeOnCreate(permissionsGranted);
     }
 
+    private void save(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    String filename = input.getText().toString();
+                    if (filename.length() >0 ){
+                        filename += ".btst";
+                        BtsTracker btsTracker = (BtsTracker) getApplication();
+                        fileManager.exportToFile(MainActivity.this, btsTracker.getBtsManager().getList(),
+                                filename);
+                    } else {
+                        Toast.makeText(MainActivity.this, "Incorrect filename. Try again.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        };
+
+        builder.setMessage("Please choose filename:")
+                .setPositiveButton("OK", dialogClickListener)
+                .setNegativeButton("Cancel", dialogClickListener)
+                .setIcon(R.drawable.ic_menu_save)
+                .setTitle("Save")
+                .show();
+
+
+    }
+
     private void reset(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -128,7 +172,6 @@ public class MainActivity extends AppCompatActivity
             }
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("You are going to discard all your data. Are you sure?")
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener)
