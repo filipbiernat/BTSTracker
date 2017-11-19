@@ -3,7 +3,6 @@
 
     <group android:checkableBehavior="single"
         android:id="@+id/menu_top">
-
         <item
             android:id="@+id/nav_list"
             android:icon="@drawable/ic_menu_list"
@@ -14,11 +13,14 @@
             android:title="Map" />
     </group>
     <group android:checkableBehavior="single"
-        android:id="@+id/menu_bottom">
-
+        android:id="@+id/menu_middle">
         <item
+            android:id="@+id/nav_tutorial"
             android:icon="@drawable/ic_menu_tutorial"
             android:title="Tutorial" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_bottom">
         <item
             android:id="@+id/nav_open"
             android:icon="@drawable/ic_menu_open"

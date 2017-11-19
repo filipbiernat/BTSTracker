@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new ListFragment();
         } else if (id == R.id.nav_map) {
             fragment = new MapFragment();
+        } else if (id == R.id.nav_tutorial) {
+            fragment = new TutorialFragment();
         } else if (id == R.id.nav_open) {
             taskManager.open();
         } else if (id == R.id.nav_save) {
