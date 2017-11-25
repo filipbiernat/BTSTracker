@@ -1,6 +1,7 @@
 package pl.edu.agh.student.fbierna.btstracker.data;
 
 import android.telephony.CellInfo;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -38,10 +39,12 @@ public class BtsManager {
     private final BtsSearcher btsSearcher;
 
     private Date timeOfAttach;
+    private Boolean attached;
 
     public BtsManager(BtsTracker btsTracker){
         btsList = new BtsList();
         btsSearcher = new BtsSearcher(btsTracker);
+        attached = true;
     }
 
     public void reset(){
@@ -53,31 +56,39 @@ public class BtsManager {
 
         detachPresentBts();
 
-        boolean isAlreadyAdded = btsList.addBts(newBts);
+        if (newBts == null){
+            attached = false;
+        } else {
+            boolean isAlreadyAdded = btsList.addBts(newBts);
 
-        if (isAlreadyAdded) {
-            for (Bts bts : btsList) {
-                if (btsList.getLast() != null &&
-                        !bts.equals(btsList.getLast()) &&
-                        newBts.sameLngLat(bts.getLatLng()) &&
-                        bts.getRotation() == 0) {
-                    bts.setRotation(30);
-                    newBts.setRotation(-30);
+            if (isAlreadyAdded) {
+                for (Bts bts : btsList) {
+                    if (btsList.getLast() != null &&
+                            !bts.equals(btsList.getLast()) &&
+                            newBts.sameLngLat(bts.getLatLng()) &&
+                            bts.getRotation() == 0) {
+                        bts.setRotation(30);
+                        newBts.setRotation(-30);
+                    }
                 }
             }
+
+            attached = true;
         }
     }
 
     private void detachPresentBts(){
-        Date currentTime = Calendar.getInstance().getTime();
-        if (btsList.size() > 0)
-        {
-            Bts presentBts = btsList.getLast();
-            if (null != presentBts){
-                presentBts.detach(timeOfAttach, currentTime);
+        if (attached){
+            Date currentTime = Calendar.getInstance().getTime();
+            if (btsList.size() > 0)
+            {
+                Bts presentBts = btsList.getLast();
+                if (null != presentBts){
+                    presentBts.detach(timeOfAttach, currentTime);
+                }
             }
+            timeOfAttach = currentTime;
         }
-        timeOfAttach = currentTime;
     }
 
     public Bts get(int position) {
@@ -92,9 +103,11 @@ public class BtsManager {
     public ArrayList<MarkerOptions> getMarkerOptions(){
         ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
         for (Bts bts : btsList) {
-            MarkerOptions options = bts.getMarkerOptions();
-            if (options.getPosition() != null) {
-                markerOptions.add(options);
+            if (bts != null) {
+                MarkerOptions options = bts.getMarkerOptions();
+                if (options != null && options.getPosition() != null) {
+                    markerOptions.add(options);
+                }
             }
         }
         return markerOptions;
@@ -106,5 +119,9 @@ public class BtsManager {
 
     public LinkedList<Bts> getList() {
         return btsList;
+    }
+
+    public Boolean isDetached(){
+        return !attached;
     }
 }

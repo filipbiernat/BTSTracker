@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import pl.edu.agh.student.fbierna.btstracker.BtsTracker;
 import pl.edu.agh.student.fbierna.btstracker.R;
+import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 import pl.edu.agh.student.fbierna.btstracker.main.list.ListAdapter;
 
 
@@ -46,7 +48,9 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-            }
+
+        warnIfDetached();
+    }
 
     @Override
     public void onRefresh() {
@@ -56,7 +60,17 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(false);
                 listAdapter.notifyDataSetChanged();
+                warnIfDetached();
             }
         }, 500);
+    }
+
+    private void warnIfDetached(){
+        BtsTracker btsTracker = (BtsTracker) getActivity().getApplicationContext();
+        BtsManager btsManager = btsTracker.getBtsManager();
+        if (btsManager.isDetached()){
+            Toast.makeText(getActivity(), "Warning! Currently connected to an unknown cell!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -63,6 +63,16 @@ public class MainActivity extends AppCompatActivity
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
             fabListener = new FloatingActionButtonOnClickListener(this);
             fab.setOnClickListener(fabListener);
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, new ListFragment());
+                    fragmentTransaction.commit();
+                }
+            }, 2000);
         }
     }
 

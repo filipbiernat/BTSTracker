@@ -39,9 +39,9 @@ class BtsSearcher {
         String csvQuery = getCsvQuery();
         String csvBtsData = scanCsv(csvQuery);
         if (null == csvBtsData){
-            //exception
             return null;
         }
+
         return new Bts(csvBtsData, operatorName, networkGeneration);
     }
 

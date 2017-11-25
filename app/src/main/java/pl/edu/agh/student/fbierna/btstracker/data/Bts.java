@@ -135,7 +135,9 @@ public class Bts {
         //exception
     }
     public MarkerOptions getMarkerOptions(){
-
+        if (latLng == null){
+            return null;
+        }
         return new MarkerOptions().position(latLng)
                 .title(town)
                 .snippet(timeAttached+";;"+location+";;"+getOperatorAndNetwork())
@@ -194,6 +196,9 @@ public class Bts {
     }
 
     public boolean sameLngLat(LatLng other){
+        if (latLng == null || other == null){
+            return false;
+        }
         double distanceInMeters = getLocation(latLng).distanceTo(getLocation(other));
         return distanceInMeters < 1;
     }
@@ -204,7 +209,6 @@ public class Bts {
 
     private Location getLocation(LatLng latLng){
         Location location = new Location("");
-        location.setLatitude(latLng.latitude);
         location.setLatitude(latLng.latitude);
         location.setLongitude(latLng.longitude);
         return location;
