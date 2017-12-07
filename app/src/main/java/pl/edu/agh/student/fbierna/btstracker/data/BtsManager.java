@@ -51,30 +51,36 @@ public class BtsManager {
         btsList.clear();
     }
 
-    public void switchToCell(CellInfo cellInfo, String operatorName, int networkType){
-        Bts newBts = btsSearcher.search(cellInfo, operatorName);
+    public void switchToCell(CellInfo cellInfo, String operatorName){
+        try{
+            Bts newBts = btsSearcher.search(cellInfo, operatorName);
 
-        detachPresentBts();
+            detachPresentBts();
 
-        if (newBts == null){
-            attached = false;
-        } else {
-            boolean isAlreadyAdded = btsList.addBts(newBts);
+            if (newBts == null){
+                attached = false;
+            } else {
+                boolean isAlreadyAdded = btsList.addBts(newBts);
 
-            if (isAlreadyAdded) {
-                for (Bts bts : btsList) {
-                    if (btsList.getLast() != null &&
-                            !bts.equals(btsList.getLast()) &&
-                            newBts.sameLngLat(bts.getLatLng()) &&
-                            bts.getRotation() == 0) {
-                        bts.setRotation(30);
-                        newBts.setRotation(-30);
+                if (isAlreadyAdded) {
+                    for (Bts bts : btsList) {
+                        if (btsList.getLast() != null &&
+                                !bts.equals(btsList.getLast()) &&
+                                newBts.sameLngLat(bts.getLatLng()) &&
+                                bts.getRotation() == 0) {
+                            bts.setRotation(30);
+                            newBts.setRotation(-30);
+                        }
                     }
                 }
-            }
 
-            attached = true;
+                attached = true;
+            }
         }
+        catch (Exception ex){
+            attached = false;
+        }
+
     }
 
     private void detachPresentBts(){

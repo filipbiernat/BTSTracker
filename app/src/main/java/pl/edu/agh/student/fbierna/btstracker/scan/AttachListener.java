@@ -25,8 +25,7 @@ class AttachListener extends PhoneStateListener {
         {
             if (cellInfo.isRegistered()){
                 String operatorName = telephonyManager.getNetworkOperatorName();
-                int networkType = telephonyManager.getNetworkType();
-                btsManager.switchToCell(cellInfo, operatorName, networkType);
+                btsManager.switchToCell(cellInfo, operatorName);
             }
         }
     }

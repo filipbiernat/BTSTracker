@@ -174,10 +174,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.getUiSettings().setZoomControlsEnabled(true);
         try {
             SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-            @SuppressWarnings("all")
             View zoomControls = mapFragment.getView().findViewById(1);
             if (zoomControls != null && zoomControls.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                // ZoomControl is inside of RelativeLayout
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) zoomControls.getLayoutParams();
 
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);

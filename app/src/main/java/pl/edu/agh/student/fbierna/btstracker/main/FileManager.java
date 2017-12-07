@@ -78,7 +78,6 @@ public class FileManager {
             String line;
 
             while ((line = br.readLine()) != null) {
-                Log.d("LOGFILIP", line);
                 Bts newBts = new Bts(line);
                 btsList.add(newBts);
             }
