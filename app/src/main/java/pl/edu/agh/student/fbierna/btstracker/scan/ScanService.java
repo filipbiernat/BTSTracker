@@ -34,7 +34,7 @@ public class ScanService extends Service {
         BtsTracker btsTracker = (BtsTracker) getApplicationContext();
         BtsManager btsManager = btsTracker.getBtsManager();
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        attachListener = new AttachListener(btsManager, telephonyManager);
+        //attachListener = new AttachListener(btsManager, telephonyManager);
    }
 
     @Override
