@@ -103,6 +103,9 @@ public class Bts {
         String ddhh = dd + convertTimeDelta(h, "h");
         String ddhhmm = ddhh + convertTimeDelta(m, "min");
         timeAttached = ddhhmm + convertTimeDelta(s, "s");
+        if (timeAttached == ""){
+            timeAttached = "0s";
+        }
     }
 
     public void setRotation(int rotation){
