@@ -2,6 +2,7 @@ package pl.edu.agh.student.fbierna.btstracker.main;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -105,7 +106,7 @@ class TaskManager {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                openFile();
+                                openFile(activity);
                             }
                         });
                     } else {
@@ -124,7 +125,7 @@ class TaskManager {
                 .show();
     }
 
-    public void openFile(){
+    public void openFile(final Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         final ArrayAdapter<String> arrayAdapter = fileManager.getBtstPaths(activity);
@@ -141,7 +142,7 @@ class TaskManager {
                 if (which != DialogInterface.BUTTON_NEGATIVE) {
                     String filename = arrayAdapter.getItem(which);
                     BtsTracker btsTracker = (BtsTracker) activity.getApplication();
-                    fileManager.openFromBtstFile(filename, btsTracker.getBtsManager().getList());
+                    fileManager.openFromBtstFile(context, filename, btsTracker.getBtsManager().getList());
                     refreshActivity();
                 }
             }

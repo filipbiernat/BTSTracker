@@ -71,19 +71,25 @@ public class FileManager {
     }
 
 
-    public void openFromBtstFile(String filename, LinkedList<Bts> btsList) {
+    public void openFromBtstFile(Context context, String filename, LinkedList<Bts> btsList) {
         File file = new File(getDirPath()+ File.separator + filename);
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
 
             while ((line = br.readLine()) != null) {
+                try {
                 Bts newBts = new Bts(line);
                 btsList.add(newBts);
+                } catch (Exception e) {
+                    Toast.makeText(context, "Warning! Error occurred while reading single BTS data!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
             br.close();
-        } catch (IOException e) {
-            //exception
+        } catch (Exception e) {
+            Toast.makeText(context, "Warning! Error occurred while reading data from BTST file!",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
