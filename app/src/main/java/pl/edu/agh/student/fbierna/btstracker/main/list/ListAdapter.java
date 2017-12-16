@@ -16,11 +16,9 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
     private final BtsManager btsManager;
 
     public ListAdapter(Context context) {
-        Context mContext = context;
-        BtsTracker btsTracker = (BtsTracker) mContext.getApplicationContext();
+        BtsTracker btsTracker = (BtsTracker) context.getApplicationContext();
         btsManager = btsTracker.getBtsManager();
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -52,6 +50,4 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
     public int getItemCount() {
         return btsManager.size();
     }
-
-
 }

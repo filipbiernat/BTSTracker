@@ -53,8 +53,7 @@ class FileManager {
 
         File dir = new File(getDirPath());
         File[] files = dir.listFiles();
-        for (int i = 0; i < files.length; ++i) {
-            File file = files[i];
+        for (File file : files) {
             if (file.getName().endsWith(".btst")) {
                 arrayAdapter.add(file.getName());
             }

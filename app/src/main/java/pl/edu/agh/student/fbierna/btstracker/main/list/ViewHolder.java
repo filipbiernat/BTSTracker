@@ -13,6 +13,7 @@ public class ViewHolder  extends RecyclerView.ViewHolder{
     public final TextView textViewLocation;
     public final TextView textViewOperatorAndNetwork;
     public final TextView textViewTimeAttached;
+
     public ViewHolder(View view) {
         super(view);
         networkButton = (Button) view.findViewById(R.id.buttonNetwork);
@@ -30,8 +31,6 @@ public class ViewHolder  extends RecyclerView.ViewHolder{
             networkButton.setBackgroundResource(R.drawable.circle_3g);
         } else if (network == 4) {
             networkButton.setBackgroundResource(R.drawable.circle_4g);
-        } else {
-            //exception
         }
     }
 }
