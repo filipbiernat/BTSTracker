@@ -55,7 +55,7 @@ public class BtsTracker extends Application {
         return btsManager;
     }
 
-    public void writeToFile(Context context, String fileName, String data) {
+    private void writeToFile(Context context, String fileName, String data) {
 
         Writer writer;
 

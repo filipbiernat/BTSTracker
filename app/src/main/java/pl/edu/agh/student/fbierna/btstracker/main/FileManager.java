@@ -21,7 +21,7 @@ import pl.edu.agh.student.fbierna.btstracker.data.Bts;
  * Created by Filip on 18.11.2017.
  */
 
-public class FileManager {
+class FileManager {
     private static final String DIR_NAME = "BTS_Tracker";
 
     public void saveToBtstFile(Context context, LinkedList<Bts> btsList, String filename){

@@ -21,8 +21,6 @@ import pl.edu.agh.student.fbierna.btstracker.R;
 
 public class TutorialFragment extends Fragment{
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
     public TutorialFragment() {
         // Required empty public constructor
     }
@@ -37,8 +35,8 @@ public class TutorialFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
-        mViewPager = (ViewPager) getActivity().findViewById(R.id.container);
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
+        ViewPager mViewPager = (ViewPager) getActivity().findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
     }
@@ -100,7 +98,7 @@ public class TutorialFragment extends Fragment{
         }
     }
 
-    private static String[] tutorialTips = new String[]{
+    private static final String[] tutorialTips = new String[]{
             "To <b>navigate</b> through this tutorial swipe <b>left</b> or <b>right</b>.",
             "<b><i>BTS Tracker</i></b> is an open-source mobile application dedicated to observe the <b>cellular infrastructure</b>.",
             "To <b>control</b> the application use <b>drawer menu</b> on the left-hand side.",
@@ -115,7 +113,7 @@ public class TutorialFragment extends Fragment{
             "In your <b>browser</b> visit: <i>google.com/mymaps</i> and simply import the <b>KML file</b>."
     };
 
-    private static int[] tutorialLogos = new int[]{
+    private static final int[] tutorialLogos = new int[]{
             R.drawable.ic_tutorial_0,
             R.mipmap.ic_launcher,
             R.drawable.ic_tutorial_2,

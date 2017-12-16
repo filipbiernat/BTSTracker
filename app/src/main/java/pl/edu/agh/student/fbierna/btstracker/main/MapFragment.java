@@ -187,7 +187,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void writeToFile(Context context, String fileName, String data) {
+    private void writeToFile(Context context, String fileName, String data) {
 
         Writer writer;
 

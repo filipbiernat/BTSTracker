@@ -21,8 +21,8 @@ class TaskManager {
     public static final class AccessToken { private  AccessToken() {} } //enables access to fab
     private static final  AccessToken token = new AccessToken();
 
-    private FileManager fileManager;
-    private MainActivity activity;
+    private final FileManager fileManager;
+    private final MainActivity activity;
 
     TaskManager(MainActivity activity){
         fileManager = new FileManager();
@@ -123,7 +123,7 @@ class TaskManager {
                 .show();
     }
 
-    public void openFile(final Context context){
+    private void openFile(final Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         final ArrayAdapter<String> arrayAdapter = fileManager.getBtstPaths(activity);

@@ -13,7 +13,7 @@ import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 public class ScanService extends Service {
 
 
-    final class ScanThread implements Runnable{
+    private final class ScanThread implements Runnable{
         @Override
         public void run() {
             TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);

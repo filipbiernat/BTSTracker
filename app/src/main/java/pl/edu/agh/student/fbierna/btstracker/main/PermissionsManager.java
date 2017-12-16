@@ -13,9 +13,9 @@ import android.widget.Toast;
  */
 
 class PermissionsManager {
-    private Activity activity;
+    private final Activity activity;
 
-    private static String[] permissionsRequired = new String[]{
+    private static final String[] permissionsRequired = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             //Manifest.permission.ACCESS_COARSE_LOCATION,
             //Manifest.permission.ACCESS_NETWORK_STATE,

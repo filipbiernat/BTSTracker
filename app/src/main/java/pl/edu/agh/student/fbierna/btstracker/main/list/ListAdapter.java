@@ -13,11 +13,10 @@ import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
 
 
 public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
-    private final Context mContext;
     private final BtsManager btsManager;
 
     public ListAdapter(Context context) {
-        mContext = context;
+        Context mContext = context;
         BtsTracker btsTracker = (BtsTracker) mContext.getApplicationContext();
         btsManager = btsTracker.getBtsManager();
     }

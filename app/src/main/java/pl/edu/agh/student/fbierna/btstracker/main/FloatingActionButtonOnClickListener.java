@@ -28,7 +28,7 @@ class FloatingActionButtonOnClickListener implements View.OnClickListener {
         switchDrawable(view, context);
     }
 
-    protected FloatingActionButtonOnClickListener switchState(Context context, Boolean enableToast){
+    FloatingActionButtonOnClickListener switchState(Context context, Boolean enableToast){
         if (serviceEnabled) {
             stopService(context, enableToast);
         } else {
