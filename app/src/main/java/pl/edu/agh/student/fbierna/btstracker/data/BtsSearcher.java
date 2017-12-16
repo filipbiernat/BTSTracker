@@ -87,7 +87,7 @@ class BtsSearcher {
         return mcc + ";" + networkGeneration + ";" + lac + ";" + btsId;
     }
 
-    private String scanCsv(String query){ //todo maybe use file manager
+    private String scanCsv(String query){
         String line = null;
         try {
             InputStreamReader inputStreamReader =
@@ -102,16 +102,13 @@ class BtsSearcher {
                     }
                 }
             }
-
         } catch (IOException e) {
-            //log the exception
         } finally {
 
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    //log the exception
                 }
             }
             return line;
@@ -126,6 +123,5 @@ class BtsSearcher {
             String cellIds = lineSplitted[CELL_ID_CSV_LOCATION];
             return cellIds.contains("*") || cellIds.contains(Integer.toString(id % 10));
         }
-
     }
 }

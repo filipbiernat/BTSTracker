@@ -83,7 +83,7 @@ public class Bts {
             case 2: return "GSM";
             case 3: return "WCDMA";
             case 4: return "LTE";
-            default: return "Unknown";//exception
+            default:return "Unknown";
         }
     }
 
@@ -131,7 +131,6 @@ public class Bts {
             return 4;
         }
         return 0;
-        //exception
     }
     public MarkerOptions getMarkerOptions(){
         if (latLng == null){
