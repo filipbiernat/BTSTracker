@@ -1,7 +1,6 @@
 package pl.edu.agh.student.fbierna.btstracker.data;
 
 import android.telephony.CellInfo;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;

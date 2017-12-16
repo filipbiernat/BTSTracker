@@ -1,12 +1,10 @@
 package pl.edu.agh.student.fbierna.btstracker.main;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;

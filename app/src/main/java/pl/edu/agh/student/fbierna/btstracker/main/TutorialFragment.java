@@ -18,9 +18,6 @@ import android.widget.TextView;
 
 import pl.edu.agh.student.fbierna.btstracker.R;
 
-import static android.text.Html.FROM_HTML_MODE_COMPACT;
-import static pl.edu.agh.student.fbierna.btstracker.R.drawable.ic_tutorial_0;
-
 
 public class TutorialFragment extends Fragment{
 

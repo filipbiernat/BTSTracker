@@ -3,7 +3,6 @@ package pl.edu.agh.student.fbierna.btstracker.main;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -13,16 +12,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Writer;
 import java.util.LinkedList;
 
 import pl.edu.agh.student.fbierna.btstracker.data.Bts;
-import pl.edu.agh.student.fbierna.btstracker.data.BtsManager;
-
-import static android.R.attr.name;
-import static android.R.attr.path;
 
 /**
  * Created by Filip on 18.11.2017.

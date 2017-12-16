@@ -1,7 +1,6 @@
 package pl.edu.agh.student.fbierna.btstracker.data;
 
 import android.location.Location;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -9,9 +8,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
-import static android.R.attr.description;
-import static android.R.attr.name;
 
 public class Bts {
     private final int networkGeneration;
